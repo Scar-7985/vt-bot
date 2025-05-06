@@ -46,17 +46,17 @@ const App = () => {
             <Route path='*' element={<Login />} />
           </Route>
           <Route path='/privacy-policy' element={
-              <>
-                <Header title={"Privacy Poicy"} />
-                <PrivacyPolicy />
-              </>
-            } />
-            <Route path='/terms-condition' element={
-              <>
-                <Header title={"Terms & Condition"} />
-                <TermsCondition />
-              </>
-            } />
+            <>
+              <Header title={"Privacy Poicy"} />
+              <PrivacyPolicy />
+            </>
+          } />
+          <Route path='/terms-condition' element={
+            <>
+              <Header title={"Terms & Condition"} />
+              <TermsCondition />
+            </>
+          } />
 
           <Route element={<ProtectedRoutes />}>
             <Route path='/' element={
@@ -125,7 +125,7 @@ const App = () => {
                 <Earnings />
               </>
             } />
-            
+
             <Route path='/refer' element={
               <>
                 <Header title={"Refer & Earn"} />

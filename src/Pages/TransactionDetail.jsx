@@ -9,14 +9,20 @@ const TransactionDetail = () => {
     const { transactionId } = location.state;
     const [transactionData, setTransactionData] = useState(null);
 
+
     useEffect(() => {
         if (isAuthenticated) {
-            const newData = new FormData();
-            newData.append("cuid", isAuthenticated)
-            axios.post(`${SITE_URL}/api/get-api/transaction.php`, newData).then(resp => {
+            const form = new FormData();
+            form.append("cuid", isAuthenticated)
+            axios.post(`${SITE_URL}/api/get-api/transaction.php`, form).then(resp => {
                 if (resp.data.length > 0) {
+
                     const filteredData = resp.data.find((item) => Number(item.id) === Number(transactionId));
-                    console.log(filteredData);
+                    // if (filteredData.txnname.includes("Purchased Bot")) {
+                    //     axios.post(`${SITE_URL}/api/get-api/update_profile.php`, form).then(resp => {
+                    //         console.log(resp.data);
+                    //     })
+                    // }
 
                     setTransactionData(filteredData)
                 }
@@ -26,7 +32,7 @@ const TransactionDetail = () => {
             })
         }
     }, [transactionId])
-    
+
 
     return (
         <div className='section'>
@@ -52,14 +58,36 @@ const TransactionDetail = () => {
                                 <ul className="listview flush transparent simple-listview no-space mt-3">
                                     <li>
                                         <strong className="">Status</strong>
-                                        {/* <span 
-                                        className={`text-${
-                                        transactionData.txnstatus === 1 
-                                        ? "warning" 
-                                        : transaction.txnstatus}`}>Success</span> */}
+                                        <span
+                                            className={`text-${transactionData.txnstatus === 1
+                                                ? "warning"
+                                                : transactionData.txnstatus === 2
+                                                    ? "success"
+                                                    : transactionData.txnstatus === 3
+                                                        ? "danger"
+                                                        : ""}`}>
+                                            {
+                                                transactionData.txnstatus === 1
+                                                    ? "In review"
+                                                    : transactionData.txnstatus === 2
+                                                        ? "Success"
+                                                        : transactionData.txnstatus === 3
+                                                            ? "Rejected"
+                                                            : ""
+                                            }
+
+                                        </span>
+
                                     </li>
+                                    {
+                                        transactionData.txnstatus === 3 &&
+                                        <li>
+                                            <strong className="">Remark</strong>
+                                            <span className='text-danger'>{transactionData.txnremarks}</span>
+                                        </li>
+                                    }
                                     <li>
-                                        <strong className="">Category</strong>
+                                        <strong className="">Payment Type</strong>
                                         <span className=''>{transactionData.txnname}</span>
                                     </li>
                                     <li>

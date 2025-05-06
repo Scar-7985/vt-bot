@@ -113,7 +113,7 @@ const UpdateProfile = () => {
 
                                     {
                                         showChangeImage
-                                            ? <img src={showChangeImage} alt="Preview" className="imaged w100 rounded" />
+                                            ? <img src={showChangeImage} alt="Preview" className="imaged w100 rounded" style={{ width: "100px", height: "100px" }} />
                                             : <img src={`${SITE_URL}/upload/user/${profilePic ? profilePic : "user-default-image.png"}`} alt="avatar"
                                                 className="imaged rounded" style={{ width: "100px", height: "100px" }} />
                                     }
@@ -166,7 +166,7 @@ const UpdateProfile = () => {
 
                                 <div className="form-group boxed">
                                     <div className="input-wrapper">
-                                        <label className={`label d-flex align-item-end text-white`} htmlFor="phone5">
+                                        <label className={`label d-flex align-item-end`} htmlFor="phone5">
                                             <span>Phone number</span>
 
                                         </label>
@@ -185,7 +185,7 @@ const UpdateProfile = () => {
 
                                 <div className="form-group boxed">
                                     <div className="input-wrapper">
-                                        <label className={`label text-white `} htmlFor="name5">Name</label>
+                                        <label className={`label`} htmlFor="name5">Name</label>
                                         <input
                                             type="text"
                                             className={`form-control`}

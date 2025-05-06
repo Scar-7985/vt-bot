@@ -8,7 +8,7 @@ const Login = () => {
   const [showOtp, setShowOtp] = useState(false);
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState(["", "", "", ""]);
-  const [isChecked, setIsChecked] = useState(false);
+  
   const [timer, setTimer] = useState(30);
   const [canResend, setCanResend] = useState(false);
 
@@ -252,53 +252,22 @@ const Login = () => {
               <div className="form-button mt-2">
                 <button
                   type="submit"
-                  disabled={!isChecked && !showOtp}
+                 
                   className="btn btn-primary btn-block"
                   style={{ height: "40px" }}
                 >
                   {showOtp ? "Submit" : "Log In"}
                 </button>
-                {!showOtp && (
-                  <div class="section full mt-1 mb-2">
-                    <div class="wide-block pt-2 pb-2 pl-0 border-none">
-                      <div class="custom-control custom-checkbox">
-                        <input
-                          type="checkbox"
-                          class="custom-control-input"
-                          id="customChecka1"
-                          checked={isChecked}
-                          onChange={(e) => setIsChecked(e.target.checked)}
-                        />
-                        <label
-                          class="custom-control-label"
-                          for="customChecka1"
-                        ></label>
-                        <span
-                          style={{ fontSize: "12px" }}
-                          className="text-primar"
-                        >
-                          By Logging in you agree to our{" "}
-                          <Link
-                            to={"/terms-condition"}
-                            state={{ textDecoration: "underline" }}
-                          >
-                            Terms & Conditions
-                          </Link>{" "}
-                          and <Link to={"/privacy-policy"}>Privacy Policy</Link>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                )}
+              
               </div>
             </div>
           </div>
-          <div className="text-right">
+          <div className="text-center">
             <Link
               to={"/signup"}
               style={{ cursor: "pointer", fontSize: "12px", fontWeight: "500" }}
             >
-              Register Now
+             <button className="btn btn-primary btn-block">Register Now</button> 
             </Link>
           </div>
         </form>

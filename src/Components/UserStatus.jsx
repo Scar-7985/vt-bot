@@ -14,7 +14,7 @@ const UserStatus = () => {
         show: false
     })
 
-    
+
 
     useEffect(() => {
         if (isAuthenticated) {
@@ -26,12 +26,14 @@ const UserStatus = () => {
                     const userStatus = Number(data.status);
                     const botStatus = Number(data.bot_status);
 
-
-                    const blockedPaths = [
-                        "/",
-                        "/team",
-                        "/investment",
-                        "/earnings"
+                    const allowedPaths = [
+                        "/purchase-bot",
+                        "/profile",
+                        "/update-profile",
+                        "/bot",
+                        "/kyc",
+                        "/privacy-policy",
+                        "/terms-condition"
                     ];
 
                     if (userStatus === 0 || userStatus === 101) {
@@ -47,13 +49,13 @@ const UserStatus = () => {
                     }
 
                     if (
-                        blockedPaths.includes(location.pathname) &&
-                        (botStatus === 0 || botStatus === 1 || botStatus === 3 || botStatus === 4)
+                        !allowedPaths.includes(location.pathname) &&
+                        [0, 1, 3, 4].includes(botStatus)
                     ) {
-                       
                         navigate("/purchase-bot");
                     }
                 });
+
         }
     }, [location.pathname]);
     return <Toast msg={toast.msg} type={toast.type} show={toast.show} />

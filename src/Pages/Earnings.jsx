@@ -254,19 +254,29 @@ const Home = () => {
         </div>
         <div className="col-6">
           <div className="stat-box">
+            <div className="title">Referal Profit</div>
+            <div className="value text-danger">$ 00.00</div>
+          </div>
+        </div>
+
+      </div>
+      <div className="row mt-2">
+        <div className="col-6">
+          <div className="stat-box">
             <div className="title">Level Profit</div>
             <div className="value text-danger">$ 00.00</div>
           </div>
         </div>
-      </div>
-      <div className="row mt-2">
         <div className="col-6">
           <div className="stat-box">
             <div className="title">Daily Level Profit</div>
             <div className="value">$ 00.00</div>
           </div>
         </div>
-        <div className="col-6">
+
+      </div>
+      <div className="row mt-2">
+        <div className="col-12">
           <div className="stat-box">
             <div className="title">LDC</div>
             <div className="value">$ 00.00</div>

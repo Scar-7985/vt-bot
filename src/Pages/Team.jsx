@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { SITE_URL, isAuthenticated } from "../Auth/Define"
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Toast from '../Components/Toast';
 import "./KYC.css"
 
@@ -51,18 +51,17 @@ const Team = () => {
 
 
   const viewTeam = (type) => {
-    if (directTeam > 0) {
-      navigate("/team-list", { state: { type: type } });
+    if (directTeam > 0 || totalTeam > 0) {
+      navigate("/team-list", { state: { type } });
     } else {
       setShowToast({ msg: "There are no data to show", type: "danger", show: true });
+      setTimeout(() => {
+        setShowToast({ msg: "", type: "", show: false });
+      }, 2000);
     }
-    if (totalTeam > 0) {
-      navigate("/team-list", { state: { type: type } });
-    } else {
-      setShowToast({ msg: "There are no data to show", type: "danger", show: true });
-    }
-    setShowToast({ msg: "", type: "", show: false });
-  }
+  };
+
+
 
   return (
     <div className="section">
@@ -83,46 +82,65 @@ const Team = () => {
           </div>
         </div>
       </div>
-      {/* xxxxxxxxxxxxxxx Ranks xxxxxxxxxxxxxxx */}
 
-        <div className="rank-container">
-          <h3 className="table-title">Your Rank</h3>
-          <div className="stepper">
-            {ranks.map((rank, index) => (
-              <div className="step-item" key={index}>
-                <div className="step-marker">
-                  <div
-                    className={`circle ${index < currentStep
-                        ? "completed"
-                        : index === currentStep
-                          ? "current"
-                          : ""
-                      }`}
-                  >
-                    {index < currentStep ? "✔" : index + 1}
-                  </div>
+      {/* xxxxxxxxxxxx Refer & Earn xxxxxxxxxxxx */}
 
-                  {index !== ranks.length - 1 && <div className="vertical-line" />}
-                </div>
-
-                <div className={`step-content ${index < currentStep ? "completed2" : ""}`}>
-                  <div className="step-label">{rank.label}</div>
-                  <div className="step-info">
-                    <span>
-                      <strong>Target:</strong> {rank.target}
-                    </span>
-                    <span>
-                      <strong>Team:</strong> {rank.team}
-                    </span>
-                    <span>
-                      <strong>Income:</strong> {rank.income}
-                    </span>
-                  </div>
-                </div>
+      <div className="row mt-2">
+        <div className="col-12">
+          <div className="stat-box d-flex justify-content-between aign-items-center">
+            <div>
+              <div className="title" style={{ fontSize: '16px' }}>Refer & Earn</div>
+              <div className="value">
+                <Link to={"/refer"} className='btn btn-success btn-sm'>Share</Link>
               </div>
-            ))}
+            </div>
+            <div className="right text-right" style={{ width: "60px" }}>
+              <img src="/assets/img/refer-earn.png" className='img-fluid' style={{ height: "100%", width: "100%" }} alt="trophy" />
+            </div>
           </div>
         </div>
+      </div>
+
+      {/* xxxxxxxxxxxxxxx Ranks xxxxxxxxxxxxxxx */}
+
+      <div className="rank-container mt-2">
+        <h3 className="table-title">Your Rank</h3>
+        <div className="stepper">
+          {ranks.map((rank, index) => (
+            <div className="step-item" key={index}>
+              <div className="step-marker">
+                <div
+                  className={`circle ${index < currentStep
+                    ? "completed"
+                    : index === currentStep
+                      ? "current"
+                      : ""
+                    }`}
+                >
+                  {index < currentStep ? "✔" : index + 1}
+                </div>
+
+                {index !== ranks.length - 1 && <div className="vertical-line" />}
+              </div>
+
+              <div className={`step-content ${index < currentStep ? "completed2" : ""}`}>
+                <div className="step-label">{rank.label}</div>
+                <div className="step-info">
+                  <span>
+                    <strong>Target:</strong> {rank.target}
+                  </span>
+                  <span>
+                    <strong>Team:</strong> {rank.team}
+                  </span>
+                  <span>
+                    <strong>Income:</strong> {rank.income}
+                  </span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
 
       <Toast msg={showToast.msg} type={showToast.type} show={showToast.show} />
     </div>

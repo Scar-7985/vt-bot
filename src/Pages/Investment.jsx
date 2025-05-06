@@ -29,7 +29,6 @@ const Investment = () => {
       axios.post(`${SITE_URL}/api/get-api/investment.php`, form).then(resp => {
         if (resp.data.length > 0) {
           setInvestmentData(resp.data);
-
         }
       })
     }
@@ -72,9 +71,8 @@ const Investment = () => {
       <div className="wallet-card my-3" >
         <div class="balance">
           <div class="left">
-            {/* <span class="title">Investment</span> */}
-            <span class="total">Investment</span>
-            {/* <h1 class="total">$ 0.00</h1> */}
+            <span class="title">Investment</span>
+            <h1 class="total">$ 0.00</h1>
           </div>
           <div class="right" data-toggle="modal"
             data-target="#depositActionSheet">

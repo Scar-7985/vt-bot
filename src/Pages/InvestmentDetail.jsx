@@ -57,7 +57,7 @@ const InvestmentDetail = () => {
                                     <span className=''>{investmentData.txnid}</span>
                                 </li>
                                 <li>
-                                    <strong className="">Category</strong>
+                                    <strong className="">Investment Id</strong>
                                     <span className=''>{investmentData.invid}</span>
                                 </li>
                                 <li>

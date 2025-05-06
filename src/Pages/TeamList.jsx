@@ -36,8 +36,6 @@ const TeamList = () => {
     }
   }, [type])
 
-  console.log(directTeam);
-
   const viewLevelList = (Id) => {
     navigate("/level-list", { state: { viewId: Id } })
   }
@@ -45,7 +43,7 @@ const TeamList = () => {
   return (
     <div>
       <Header title={type === "D" ? "Direct Team" : "Levels"} />
-      <div className="section">
+      <div className="section pb-5">
         {
           showDirect
             ? (
@@ -64,7 +62,9 @@ const TeamList = () => {
                             </div>
                           </div>
                           <div className="right">
-                            <div className={`price text-${item.bot_status === 2 ? 'success' : 'danger'}`}>{item.bot_status === 2 ? "Active" : "Inactive"}</div>
+                            <div className={`price text-${item.bot_status === 2 ? 'success' : 'danger'}`}>
+                              {item.bot_status === 2 ? "Active" : "Inactive"}
+                            </div>
                           </div>
                         </a>
                       </div>

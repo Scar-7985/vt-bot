@@ -19,23 +19,18 @@ const Home = () => {
 
       axios.post(`${SITE_URL}/api/get-api/update_profile.php`, form)
         .then(resp => {
-          const botExpiryStr = resp.data.bot_expiry;     // "09-05-2025 16:51"
-          const botPurchasedStr = resp.data.accept_date; // "2025-05-05 16:52"
+          console.log(resp.data);
+
+          const botExpiryStr = resp.data.bot_expiry;   // e.g. "05-06-2025"
+          const botPurchaseStr = resp.data.bot_pdate;  // e.g. "06-05-2025"
 
           setBotStatus(Number(resp.data.bot_status));
 
-          // Parse expiry date: DD-MM-YYYY HH:mm
-          const [day, month, yearAndTime] = botExpiryStr.split('-');
-          const [year, time] = yearAndTime.split(' ');
-          const [hour, minute] = time.split(':');
-          const expiryDate = new Date(`${year}-${month}-${day}T${hour}:${minute}:00`);
+          // Parse expiry date (DD-MM-YYYY) and assume it expires at 23:59:59
+          const [expDay, expMonth, expYear] = botExpiryStr.split('-');
+          const expiryDate = new Date(`${expYear}-${expMonth}-${expDay}T23:59:59`);
 
-          // Parse purchase date: YYYY-MM-DD HH:mm
-          const [purchaseDatePart, purchaseTimePart] = botPurchasedStr.split(' ');
-          const purchasedDate = new Date(`${purchaseDatePart}T${purchaseTimePart}:00`);
-
-          // Calculate total time difference in milliseconds
-          let remainingMs = expiryDate - purchasedDate;
+          let remainingMs = expiryDate - new Date();
 
           let timerInterval;
 
@@ -51,7 +46,10 @@ const Home = () => {
               const mins = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, '0');
               const secs = String(totalSeconds % 60).padStart(2, '0');
 
-              const formatted = days > 0 ? `${days}d ${hrs}:${mins}:${secs}` : `${hrs}:${mins}:${secs}`;
+              const formatted = days > 0
+                ? `${days}d ${hrs}:${mins}:${secs}`
+                : `${hrs}:${mins}:${secs}`;
+
               setTimeLeft(formatted);
               remainingMs -= 1000;
             }
@@ -60,6 +58,7 @@ const Home = () => {
           updateTimer(); // Initial call
           timerInterval = setInterval(updateTimer, 1000);
 
+          // Clear on unmount
           return () => clearInterval(timerInterval);
         })
         .catch(error => {
