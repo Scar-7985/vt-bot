@@ -1,0 +1,95 @@
+/* xxxxxxxxxxxxxx Progress Rank xxxxxxxxxxxxxx */
+
+.rank-container {
+ 
+  margin: 30px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.table-title {
+  text-align: center;
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 25px;
+}
+
+.stepper {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  position: relative;
+}
+
+.step-item {
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+}
+
+.step-marker {
+  width: 40px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #ccc;
+  color: white;
+  text-align: center;
+  line-height: 30px;
+  font-weight: bold;
+  z-index: 2;
+  position: relative;
+}
+
+.circle.completed {
+  background-color: #28a745;
+}
+.step-content.completed2{
+  background-color: #e5fedf;
+  color:black
+}
+.circle.current {
+  background-color: #ffc107;
+  color: #000;
+}
+
+.vertical-line {
+  position: absolute;
+  top: 30px; 
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: calc(100% + 225px); 
+  background-color: #ccc;
+  z-index: 1;
+}
+
+.step-content {
+  margin-left: 15px;
+  background-color: #f5f5f5;
+  padding: 10px 15px;
+  border-radius: 8px;
+  flex-grow: 1;
+}
+
+.step-label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.step-info {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  gap: 3px;
+}
