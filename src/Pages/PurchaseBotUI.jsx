@@ -56,9 +56,9 @@ const PurchaseBotUI = () => {
     return (
         <div className='section'>
             <div className="card mt-2">
-                <div className="card-body">
+                <div className="card-body text-center">
                     <div style={{ height: "200px" }}><LottieGIF /></div>
-                    <div className='text-center' dangerouslySetInnerHTML={{ __html: getMessage() }} />
+                    <strong className='text-center text-dark' dangerouslySetInnerHTML={{ __html: getMessage() }} />
                     {
                         (botStatus === 0 || botStatus === 3 || botStatus === 4) &&
                         <Link to={"/bot"} className='btn btn-success btn-block mt-2'>Buy Now</Link>

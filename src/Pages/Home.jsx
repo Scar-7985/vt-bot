@@ -41,7 +41,7 @@ const Home = () => {
               navigate('/purchase-bot');
             } else {
               const totalSeconds = Math.floor(remainingMs / 1000);
-              const days = Math.floor(totalSeconds / (3600 * 24));
+              const days = (Math.floor(totalSeconds / (3600 * 24)) - 1);
               const hrs = String(Math.floor((totalSeconds % (3600 * 24)) / 3600)).padStart(2, '0');
               const mins = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, '0');
               const secs = String(totalSeconds % 60).padStart(2, '0');
@@ -267,8 +267,8 @@ const Home = () => {
             <div className="left">
               <h2 className="title m-0">Investment</h2>
               <strong className='text-dark'>Portfolio</strong><br />
-              <button type="button" class="btn btn-icon btn-primary mt-1">
-                <span class="material-symbols-outlined">
+              <button type="button" className="btn btn-icon btn-primary mt-1">
+                <span className="material-symbols-outlined">
                   crowdsource
                 </span>
               </button>

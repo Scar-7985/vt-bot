@@ -23,6 +23,12 @@ const accountMenu = [
         icon: "credit_card_clock",
         path: "/transaction"
     },
+    {
+        id: 4,
+        title: "Refer & Earn",
+        icon: "sync_disabled",
+        path: "/refer"
+    },
 ];
 
 
@@ -30,9 +36,9 @@ const companyDetails = [
 
     {
         id: 1,
-        title: "Support",
-        icon: "support_agent",
-        path: "/support"
+        title: "Privacy Policy",
+        icon: "policy",
+        path: "/privacy-policy"
     },
     {
         id: 2,
@@ -42,18 +48,11 @@ const companyDetails = [
     },
     {
         id: 3,
-        title: "Privacy Policy",
-        icon: "policy",
-        path: "/privacy-policy"
+        title: "Support",
+        icon: "support_agent",
+        path: "/support"
     },
-    {
-        id: 4,
-        title: "Refer & Earn",
-        icon: "sync_disabled",
-        path: "/refer"
-    },
-
-]
+];
 
 const Profile = () => {
 
@@ -96,8 +95,7 @@ const Profile = () => {
                     </a>
                 </div>
                 <div className={``}>
-                    <h3 className={`mb-0`}>{window.localStorage.getItem("userName:")}</h3>
-                    <h4 className={`mb-0 mt-1`}>{window.localStorage.getItem("userId:")}</h4>
+                    
                     {
                         rank !== 0 &&
                         <h4 className={`mb-0 mt-1 d-flex align-items-center`}>
@@ -115,7 +113,8 @@ const Profile = () => {
 
                         </h4>
                     }
-
+                    <h3 className={`mb-0`}>{window.localStorage.getItem("userName:")}</h3>
+                    <h4 className={`mb-0 mt-1`}>{window.localStorage.getItem("userId:")}</h4>
                 </div>
 
             </div>

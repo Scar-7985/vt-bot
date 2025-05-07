@@ -17,10 +17,10 @@ const Bot = lazy(() => import("./Pages/Bot"));
 const Purchase = lazy(() => import("./Pages/Purchase"));
 const Transaction = lazy(() => import("./Pages/Transactions"));
 const TransactionDetail = lazy(() => import("./Pages/TransactionDetail"));
-const Team = lazy(() => import("./Pages/Team"));
+const Community = lazy(() => import("./Pages/Community"));
 const Refer = lazy(() => import("./Pages/Refer"));
 const Pocket = lazy(() => import('./Pages/Pocket'));
-const TeamList = lazy(() => import("./Pages/TeamList"));
+const CommunityList = lazy(() => import("./Pages/CommunityList"));
 const LevelList = lazy(() => import("./Pages/LeveList"));
 const PurchaseBotUI = lazy(() => import("./Pages/PurchaseBotUI"))
 const PrivacyPolicy = lazy(() => import("./Pages/PrivacyPolicy"))
@@ -106,9 +106,9 @@ const App = () => {
                 <Investment />
               </>
             } />
-            <Route path='/team-list' element={
+            <Route path='/community-list' element={
               <>
-                <TeamList />
+                <CommunityList />
               </>
             } />
             <Route path='/level-list' element={
@@ -140,10 +140,10 @@ const App = () => {
                 <Refer />
               </>
             } />
-            <Route path='/team' element={
+            <Route path='/community' element={
               <>
                 <Header title={"Community"} />
-                <Team />
+                <Community />
               </>
             } />
             <Route path='/update-profile' element={

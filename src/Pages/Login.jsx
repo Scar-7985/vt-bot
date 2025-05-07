@@ -3,12 +3,13 @@ import React, { useState, useEffect } from "react";
 import { SITE_URL } from "../Auth/Define";
 import { Link } from "react-router-dom";
 import Toast from "../Components/Toast";
+import LottieGIF from "../Components/LottieGIF";
 
 const Login = () => {
   const [showOtp, setShowOtp] = useState(false);
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState(["", "", "", ""]);
-  
+
   const [timer, setTimer] = useState(30);
   const [canResend, setCanResend] = useState(false);
 
@@ -31,7 +32,7 @@ const Login = () => {
       if (
         resp.data.status === 100 &&
         resp.data.msg ===
-          "OTP successfully sent to your mailbox. Please verify."
+        "OTP successfully sent to your mailbox. Please verify."
       ) {
         setToast({ msg: resp.data.msg, type: "success", show: true });
         setShowOtp(true);
@@ -142,13 +143,14 @@ const Login = () => {
 
   return (
     <div className="bg-white" style={{ height: "100vh" }}>
-      <div className="text-center">
-        <img
+      <div className="text-center m-auto" style={{ width: "300px" }}>
+        {/* <img
           src="/assets/img/Login.png"
           className="imaged"
           alt=""
           width={"400px"}
-        />
+        /> */}
+        <LottieGIF />
       </div>
 
       <div className="section text-center"></div>
@@ -157,13 +159,13 @@ const Login = () => {
           <div>
             <div className="pb-1">
               <div className="ard-header py-0 mb-3 border-secondary">
-                <h2 className="mb-0 text-center">Log In</h2>
+                <h2 className="mb-0 text-center">{showOtp ? "Verify OTP" : "Log In"}</h2>
                 <p
                   className="text-center text-muted"
                   style={{ fontSize: "13px" }}
                 >
                   {showOtp
-                    ? "Check spam messages if OTP is not received"
+                    ? "If you don't see the OTP in your inbox, please check your spam folder."
                     : "Login to you account"}
                 </p>
               </div>
@@ -252,13 +254,13 @@ const Login = () => {
               <div className="form-button mt-2">
                 <button
                   type="submit"
-                 
+
                   className="btn btn-primary btn-block"
                   style={{ height: "40px" }}
                 >
                   {showOtp ? "Submit" : "Log In"}
                 </button>
-              
+
               </div>
             </div>
           </div>
@@ -267,7 +269,7 @@ const Login = () => {
               to={"/signup"}
               style={{ cursor: "pointer", fontSize: "12px", fontWeight: "500" }}
             >
-             <button className="btn btn-primary btn-block">Register Now</button> 
+              <button className="btn btn-dark btn-block">Register Now</button>
             </Link>
           </div>
         </form>

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { SITE_URL } from '../Auth/Define';
 import { Link } from 'react-router-dom';
 import Toast from '../Components/Toast';
+import LottieGIF from '../Components/LottieGIF';
 
 const SignUp = () => {
   const [showOtp, setShowOtp] = useState(false);
@@ -135,8 +136,8 @@ const SignUp = () => {
 
   return (
     <div className='bg-white' style={{ height: "100vh" }}>
-      <div className='text-center'>
-        <img src="/assets/img/signup.png" alt="" className='imaged w-50' />
+      <div className='text-center m-auto' style={{width: "200px"}}>
+        <LottieGIF />
       </div>
 
       <div className="section mb-5 p-2">
@@ -144,9 +145,9 @@ const SignUp = () => {
           <div className="">
             <div className="pb-1">
               <div className="py-0 mb-3">
-                <h2 className='mb-0 text-center'>Register</h2>
+                <h2 className='mb-0 text-center'>{showOtp ? "Verify OTP" : "Register"}</h2>
                 <p className='text-center text-muted' style={{ fontSize: "13px" }}>
-                  {showOtp ? "Check spam messages if OTP is not received" : "Fill the form to get registered"}
+                  {showOtp ? "If you don't see the OTP in your inbox, please check your spam or junk folder." : "Fill the form to get registered"}
                 </p>
               </div>
 
@@ -288,7 +289,7 @@ const SignUp = () => {
           </div>
 
           <div className='text-center mt-2'>
-            <Link to={"/login"} className='btn btn-primary btn-block'>
+            <Link to={"/login"} className='btn btn-dark btn-block'>
               Already have an account? Log In
             </Link>
           </div>

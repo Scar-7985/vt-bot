@@ -109,7 +109,7 @@ const Purchase = () => {
 
     return (
         <div>
-            <Header title={prevPath === "/bot" ? "Bot Payment" : "Investment"} />
+            <Header title={prevPath === "/bot" ? "QR Payment" : "Investment"} />
             <div className='section mb-5'>
                 {
                     botData ? (
@@ -119,7 +119,7 @@ const Purchase = () => {
                                     <div className='d-flex flex-column'>
                                         <div className="card mt-2" >
                                             <div className="card-body">
-                                            <p>Upload payment screenshot</p>
+                                                <p>Upload payment screenshot</p>
                                                 <label htmlFor='proof' style={{
                                                     border: "1px dashed blue",
                                                     height: '200px',
@@ -150,8 +150,13 @@ const Purchase = () => {
                                 ) : (
                                     <div className='d-flex flex-column'>
                                         <div className="card mt-2" >
-                                            <div className="card-body text-center">
+                                            <div className="card-body d-flex flex-column align-items-center">
+                                                <h2>Pay Now</h2>
                                                 <img src={`${SITE_URL}/upload/qr/${botData.qr}`} className='img-fluid w-75' loading='lazy' alt="" />
+                                                <span className='mt-3 text-dark'>
+                                                    Please pay
+                                                    <strong> ${botData ? botData.amount : amount}</strong>
+                                                </span>
                                             </div>
                                         </div>
                                         {

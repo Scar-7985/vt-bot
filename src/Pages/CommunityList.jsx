@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Header from '../Components/Header';
 
-const TeamList = () => {
+const CommunityList = () => {
 
   const [showDirect, setShowDirect] = useState(true);
   const [directTeam, setDirectTeam] = useState([]);
@@ -97,4 +97,4 @@ const TeamList = () => {
   )
 }
 
-export default TeamList
+export default CommunityList;

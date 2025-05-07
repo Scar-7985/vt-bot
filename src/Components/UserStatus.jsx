@@ -31,6 +31,7 @@ const UserStatus = () => {
                         "/profile",
                         "/update-profile",
                         "/bot",
+                        "/support",
                         "/purchase",
                         "/kyc",
                         "/privacy-policy",

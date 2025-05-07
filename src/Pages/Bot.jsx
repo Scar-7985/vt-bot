@@ -49,7 +49,7 @@ const Bot = () => {
                             navigate('/purchase-bot');
                         } else {
                             const totalSeconds = Math.floor(remainingMs / 1000);
-                            const days = Math.floor(totalSeconds / (3600 * 24));
+                            const days = (Math.floor(totalSeconds / (3600 * 24)) - 1);
                             const hrs = String(Math.floor((totalSeconds % (3600 * 24)) / 3600)).padStart(2, '0');
                             const mins = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, '0');
                             const secs = String(totalSeconds % 60).padStart(2, '0');
@@ -280,7 +280,7 @@ const Bot = () => {
                                     <div className={`w-100 mt-2 bg-dark p-2 rounded d-flex flex-column justify-content-center align-items-center`}>
                                         <div className="hourglass"></div>
                                     </div>
-                                    <h6 className='mt-2 text-muted'>Your bot purchase is in review.</h6>
+                                    <h5 className='mt-2'>Your bot purchase is in review.</h5>
                                 </div>
                             }
 

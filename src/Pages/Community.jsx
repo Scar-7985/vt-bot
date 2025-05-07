@@ -14,13 +14,14 @@ const ranks = [
   { label: "Billion", target: "10 Direct", team: "10000", income: "3 %" },
 ];
 
-const currentStep = 1;
 
-const Team = () => {
+
+const Community = () => {
 
   const navigate = useNavigate();
   const [directTeam, setDirectTeam] = useState(0);
   const [totalTeam, setTotalTeam] = useState(0);
+  const [currentStep, setCurrentStep] = useState(0);
   const [showToast, setShowToast] = useState({
     msg: "",
     type: "",
@@ -30,7 +31,14 @@ const Team = () => {
   useEffect(() => {
     if (isAuthenticated) {
       const formData = new FormData();
-      formData.append("cuid", isAuthenticated)
+      formData.append("cuid", isAuthenticated);
+
+      axios.post(`${SITE_URL}/api/get-api/update_profile.php`, formData)
+      .then(resp => {
+        setCurrentStep(Number(resp.data.rank))
+      })
+
+      // xxxxxxxxxx //
       axios.post(`${SITE_URL}/api/get-api/team.php`, formData).then(resp => {
         if (resp.data.length > 0) {
           setDirectTeam(resp.data.length);
@@ -52,7 +60,7 @@ const Team = () => {
 
   const viewTeam = (type) => {
     if (directTeam > 0 || totalTeam > 0) {
-      navigate("/team-list", { state: { type } });
+      navigate("/community-list", { state: { type } });
     } else {
       setShowToast({ msg: "There are no data to show", type: "danger", show: true });
       setTimeout(() => {
@@ -65,20 +73,19 @@ const Team = () => {
 
   return (
     <div className="section">
-      {
-
-      }
+    
       <div className="row mt-2">
-        <div className="col-6">
-          <div className="stat-box" onClick={() => viewTeam("D")}>
-            <div className="title">Total Community</div>
-            <div className="value text-success" style={{ fontSize: "16px" }}>{directTeam} Members</div>
-          </div>
-        </div>
+       
         <div className="col-6">
           <div className="stat-box" onClick={() => viewTeam("L")}>
             <div className="title">Total Referals</div>
             <div className="value text-danger" style={{ fontSize: "16px" }}>{totalTeam} Members</div>
+          </div>
+        </div>
+        <div className="col-6">
+          <div className="stat-box" onClick={() => viewTeam("D")}>
+            <div className="title">Total Community</div>
+            <div className="value text-success" style={{ fontSize: "16px" }}>{directTeam} Members</div>
           </div>
         </div>
       </div>
@@ -147,4 +154,4 @@ const Team = () => {
   )
 }
 
-export default Team
+export default Community;
