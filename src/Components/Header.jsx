@@ -30,7 +30,7 @@ const Header = ({ title, showLogo = false }) => {
       }
 
       <div className="right">
-        <Link to={"/notifications"} className="headerButton">
+        <Link to={"/notification"} className="headerButton">
           <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>
             notifications
           </span>

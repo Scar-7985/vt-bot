@@ -8,7 +8,7 @@ const TransactionDetail = () => {
     const location = useLocation();
     const { transactionId } = location.state;
     const [transactionData, setTransactionData] = useState(null);
-
+    const [invId, setInvId] = useState(null);
 
     useEffect(() => {
         if (isAuthenticated) {
@@ -18,13 +18,18 @@ const TransactionDetail = () => {
                 if (resp.data.length > 0) {
 
                     const filteredData = resp.data.find((item) => Number(item.id) === Number(transactionId));
-                    // if (filteredData.txnname.includes("Purchased Bot")) {
-                    //     axios.post(`${SITE_URL}/api/get-api/update_profile.php`, form).then(resp => {
-                    //         console.log(resp.data);
-                    //     })
-                    // }
-
                     setTransactionData(filteredData)
+                    console.log("Transaction Data => ", filteredData);
+
+
+                    if (filteredData.txnname.includes("Investment")) {
+                        axios.post(`${SITE_URL}/api/get-api/investment.php`, form).then(resp => {
+                            const filteredInv = resp.data.find((INV) => INV.txnid === filteredData.txnid);
+                            console.log("INV Data => ", filteredInv);
+                            setInvId(filteredInv?.invid);
+                        })
+                    }
+
                 }
             }).catch(error => {
                 console.log("Error in getting transaction list");
@@ -94,6 +99,19 @@ const TransactionDetail = () => {
                                         <strong className="">Date</strong>
                                         <span className=''>{transactionData.txndate}</span>
                                     </li>
+                                    <li>
+                                        <strong className="">Txn Id</strong>
+                                        <span className=''>{transactionData.txnid}</span>
+                                    </li>
+
+                                    {
+                                        invId &&
+                                        <li>
+                                            <strong className="">Investment Id</strong>
+                                            <span className=''>{invId}</span>
+                                        </li>
+                                    }
+
                                     <li>
                                         <strong className=''>Amount</strong>
                                         <h3 className={transactionData.txnname.startsWith("Level") || transactionData.txnname.startsWith("Withdraw") ? 'text-success' : 'text-danger'}>

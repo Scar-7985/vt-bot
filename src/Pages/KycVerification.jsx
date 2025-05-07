@@ -19,6 +19,7 @@ const KycVerification = () => {
   const [formData, setFormData] = useState({
     account: "",
     ifsc: "",
+    bank: "",
     upi: "",
     wallet: ""
   })
@@ -64,6 +65,7 @@ const KycVerification = () => {
     newData.append("id_proof", document);
     newData.append("ifsc", formData.ifsc);
     newData.append("bank_ac", formData.account);
+    newData.append("bank_name", formData.bank);
     if (!oneTimeProof) {
       newData.append("status", showUpdateProof ? 0 : 1);
     }
@@ -113,6 +115,7 @@ const KycVerification = () => {
           setFormData({
             account: resp.data.bank_ac || "",
             ifsc: resp.data.ifsc || "",
+            bank: resp.data.bank_name || "",
             upi: resp.data.upi_id || "",
             wallet: resp.data.wallet_address || "",
           });
@@ -126,7 +129,6 @@ const KycVerification = () => {
         } else {
           setTransferType("Bank")
         }
-        console.log(resp.data);
 
       })
     }
@@ -178,7 +180,24 @@ const KycVerification = () => {
             <>
               <div className="form-group boxed">
                 <div className="input-wrapper">
-                  <label className="label" htmlFor="name">
+                  <label className="label" htmlFor="bank">
+                    Bank Name
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Your bank name"
+                    name="bank"
+                    value={formData.bank}
+                    onChange={handleChange}
+                    style={{ fontSize: "14px" }}
+                  />
+                </div>
+              </div>
+
+              <div className="form-group boxed">
+                <div className="input-wrapper">
+                  <label className="label" htmlFor="account">
                     Account number
                   </label>
                   <input

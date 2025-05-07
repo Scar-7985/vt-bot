@@ -71,13 +71,13 @@ const Team = () => {
       <div className="row mt-2">
         <div className="col-6">
           <div className="stat-box" onClick={() => viewTeam("D")}>
-            <div className="title">Total Direct</div>
+            <div className="title">Total Community</div>
             <div className="value text-success" style={{ fontSize: "16px" }}>{directTeam} Members</div>
           </div>
         </div>
         <div className="col-6">
           <div className="stat-box" onClick={() => viewTeam("L")}>
-            <div className="title">Total Team</div>
+            <div className="title">Total Referals</div>
             <div className="value text-danger" style={{ fontSize: "16px" }}>{totalTeam} Members</div>
           </div>
         </div>
@@ -104,7 +104,7 @@ const Team = () => {
       {/* xxxxxxxxxxxxxxx Ranks xxxxxxxxxxxxxxx */}
 
       <div className="rank-container mt-2">
-        <h3 className="table-title">Your Rank</h3>
+        <h3 className="table-title">Your Position</h3>
         <div className="stepper">
           {ranks.map((rank, index) => (
             <div className="step-item" key={index}>

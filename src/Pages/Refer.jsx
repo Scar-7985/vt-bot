@@ -102,7 +102,7 @@ const Refer = () => {
                 data-toggle="collapse"
                 data-target="#accordion1"
               >
-                What is Finapp?
+                What is the Refer and Earn program?
               </button>
             </div>
             <div
@@ -111,7 +111,7 @@ const Refer = () => {
               data-parent="#accordionExample1"
             >
               <div className="accordion-content text-dark">
-                Finapp is Bootstrap 4 based mobile template for mobile devices.
+                The Refer and Earn program allows you to invite friends to join our platform. When they sign up using your referral link or code and meet the requirements, both of you earn rewards.
               </div>
             </div>
           </div>
@@ -124,7 +124,7 @@ const Refer = () => {
                 data-toggle="collapse"
                 data-target="#accordion2"
               >
-                What can i do with Finapp?
+                How can I refer my friends?
               </button>
             </div>
             <div
@@ -133,9 +133,7 @@ const Refer = () => {
               data-parent="#accordionExample1"
             >
               <div className="accordion-content text-dark">
-                You can do such any Finance apps with it. Wallet apps, Crypto
-                currencies apps, finances apps, banking apps etc. TLDR : Any
-                finance apps.
+                You can share your unique referral link or code from your community or from above through WhatsApp or you can copy and share to any other platform.
               </div>
             </div>
           </div>
@@ -148,7 +146,7 @@ const Refer = () => {
                 data-toggle="collapse"
                 data-target="#accordion3"
               >
-                Is Finapp Bootstrap 4 based?
+                Where can I find my referral link or code?
               </button>
             </div>
             <div
@@ -157,7 +155,7 @@ const Refer = () => {
               data-parent="#accordionExample1"
             >
               <div className="accordion-content text-dark">
-                Yes. Finapp using Bootstrap 4 css framework.
+                Your referral link or code is available in your profile or Refer & Earn section after you log in. Just click "Copy Code" or "Share" to send it to others.
               </div>
             </div>
           </div>
@@ -170,7 +168,7 @@ const Refer = () => {
                 data-toggle="collapse"
                 data-target="#accordion4"
               >
-                How can i buy it?
+                How does the referral system work?
               </button>
             </div>
             <div
@@ -179,7 +177,7 @@ const Refer = () => {
               data-parent="#accordionExample1"
             >
               <div className="accordion-content text-dark">
-                You can buy it on Themeforest.
+                When someone signs up using your referral link/code and completes the required action (like signing up or making their first purchase), both of you will receive a reward.
               </div>
             </div>
           </div>

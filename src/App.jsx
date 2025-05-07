@@ -6,10 +6,6 @@ import UserStatus from './Components/UserStatus';
 import Header from './Components/Header';
 import Footer from './Components/Footer';
 import ScrollToTop from './Components/ScrollToTop';
-import Investment from './Pages/Investment';
-import InvestmentDetail from './Pages/InvestmentDetail';
-import PrivacyPolicy from './Pages/PrivacyPolicy';
-import TermsCondition from './Pages/TermsCondition';
 
 const Home = lazy(() => import("./Pages/Home"));
 const Login = lazy(() => import("./Pages/Login"));
@@ -27,6 +23,12 @@ const Earnings = lazy(() => import('./Pages/Earnings'));
 const TeamList = lazy(() => import("./Pages/TeamList"));
 const LevelList = lazy(() => import("./Pages/LeveList"));
 const PurchaseBotUI = lazy(() => import("./Pages/PurchaseBotUI"))
+const PrivacyPolicy = lazy(() => import("./Pages/PrivacyPolicy"))
+const TermsCondition = lazy(() => import('./Pages/TermsCondition'));
+const InvestmentDetail = lazy(() => import('./Pages/InvestmentDetail'));
+const Investment = lazy(() => import('./Pages/Investment'));
+const Notification = lazy(() => import('./Pages/Notification'));
+const NotificationDetail = lazy(() => import('./Pages/NotificationDetail'));
 
 const App = () => {
 
@@ -85,6 +87,18 @@ const App = () => {
                 <TransactionDetail />
               </>
             } />
+            <Route path='/notification' element={
+              <>
+                <Header title={"Notifications"} />
+                <Notification />
+              </>
+            } />
+            <Route path='/notification-view' element={
+              <>
+                <Header title={"Notification Detail"} />
+                <NotificationDetail />
+              </>
+            } />
             <Route path='/investment' element={
               <>
                 <Header title={"Investment"} />
@@ -121,7 +135,7 @@ const App = () => {
             } />
             <Route path='/earnings' element={
               <>
-                <Header title={"Earnings"} />
+                <Header title={"Pocket"} />
                 <Earnings />
               </>
             } />
@@ -134,7 +148,7 @@ const App = () => {
             } />
             <Route path='/team' element={
               <>
-                <Header title={"Team"} />
+                <Header title={"Community"} />
                 <Team />
               </>
             } />

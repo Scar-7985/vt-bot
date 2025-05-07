@@ -70,13 +70,15 @@ const Transactions = () => {
                       <strong
                         className={
                           item.txnname.startsWith("Level") ||
-                            item.txnname.startsWith("Withdraw")
+                            item.txnname.startsWith("Withdraw") ||
+                            item.txnname.startsWith("Investment")
                             ? "text-success"
                             : "text-danger"
                         }
                       >
                         {item.txnname.startsWith("Level") ||
-                          item.txnname.startsWith("Withdraw")
+                          item.txnname.startsWith("Withdraw") ||
+                          item.txnname.startsWith("Investment")
                           ? "+"
                           : "-"}
                         ${item.txnamount}

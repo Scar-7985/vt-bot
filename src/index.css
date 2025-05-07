@@ -10847,3 +10847,13 @@ height: 150px !important;
   background-color: gray;
   margin: 0 10px;
 }
+
+/* xxxxxxxxxxxxxxxxxxxxxxx */
+.disable-clicks {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+}

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { SITE_URL, isAuthenticated } from '../Auth/Define';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Toast from '../Components/Toast';
+import FakeGraph from '../Components/FakeGraph';
 
 const Investment = () => {
 
@@ -10,6 +11,7 @@ const Investment = () => {
   const location = useLocation()
   const [botStatus, setBotStatus] = useState(0);
   const [amount, setAmount] = useState(5);
+  const [totalInvestment, setTotalInvestment] = useState(null)
   const [investmentData, setInvestmentData] = useState([]);
   const [showToast, setShowToast] = useState({
     msg: "",
@@ -31,8 +33,13 @@ const Investment = () => {
           setInvestmentData(resp.data);
         }
       })
+
+      axios.post(`${SITE_URL}/api/get-api/total_investment.php`, form).then(resp => {
+        setTotalInvestment(Number(resp.data))
+      })
     }
   }, [])
+  
 
   const handleSubmit = () => {
 
@@ -69,14 +76,14 @@ const Investment = () => {
     <div className='section pb-5'>
       {/* xxxxxxxxxxx Investment xxxxxxxxxxx */}
       <div className="wallet-card my-3" >
-        <div class="balance">
-          <div class="left">
-            <span class="title">Investment</span>
-            <h1 class="total">$ 0.00</h1>
+        <div className="balance">
+          <div className="left">
+            <span className="title">Investment</span>
+            <h1 className="total">$ {totalInvestment ? totalInvestment : 0.00}</h1>
           </div>
-          <div class="right" data-toggle="modal"
+          <div className="right" data-toggle="modal"
             data-target="#depositActionSheet">
-            <a class="button" data-bs-toggle="modal" data-bs-target="#depositActionSheet">
+            <a className="button" data-bs-toggle="modal" data-bs-target="#depositActionSheet">
               <span className="material-symbols-outlined">
                 add
               </span>
@@ -184,6 +191,8 @@ const Investment = () => {
         </div>
       </div>
       {/* Modal section end */}
+
+      {/* <FakeGraph /> */}
       <Toast msg={showToast.msg} type={showToast.type} show={showToast.show} />
     </div>
   )
