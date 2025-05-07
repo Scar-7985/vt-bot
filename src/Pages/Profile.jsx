@@ -61,14 +61,14 @@ const Profile = () => {
     const [showModal, setShowModal] = useState(false);
     const [profilePic, setProfilePic] = useState(null);
     const [showToast, setShowToast] = useState(false);
-
+    const [rank, setRank] = useState(1);
 
     useEffect(() => {
         const form = new FormData();
         form.append("cuid", isAuthenticated);
         axios.post(`${SITE_URL}/api/get-api/update_profile.php`, form).then(resp => {
             setProfilePic(resp.data.photo);
-
+            setRank(resp.data.rank)
         })
     }, [])
 
@@ -98,7 +98,24 @@ const Profile = () => {
                 <div className={``}>
                     <h3 className={`mb-0`}>{window.localStorage.getItem("userName:")}</h3>
                     <h4 className={`mb-0 mt-1`}>{window.localStorage.getItem("userId:")}</h4>
-                    <h4 className={`mb-0 mt-1`}>IBT</h4>
+                    {
+                        rank !== 0 &&
+                        <h4 className={`mb-0 mt-1 d-flex align-items-center`}>
+                            <span
+                                className="material-symbols-outlined mr-1"
+                                style={{ fontVariationSettings: '"FILL" 1', fontSize: "16px", color: "gold" }}
+                            >
+                                crown
+                            </span>
+                            <span>
+                                {
+                                    rank === 1 ? "IBT" : rank === 2 ? "Rising" : rank === 3 ? "Master" : rank === 4 ? "Rapid" : rank === 5 ? "Million" : rank === 6 ? "Billion" : ""
+                                }
+                            </span>
+
+                        </h4>
+                    }
+
                 </div>
 
             </div>

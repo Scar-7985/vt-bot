@@ -25,11 +25,11 @@ const LevelList = lazy(() => import("./Pages/LeveList"));
 const PurchaseBotUI = lazy(() => import("./Pages/PurchaseBotUI"))
 const PrivacyPolicy = lazy(() => import("./Pages/PrivacyPolicy"))
 const TermsCondition = lazy(() => import('./Pages/TermsCondition'));
-const InvestmentDetail = lazy(() => import('./Pages/InvestmentDetail'));
 const Investment = lazy(() => import('./Pages/Investment'));
 const Notification = lazy(() => import('./Pages/Notification'));
 const NotificationDetail = lazy(() => import('./Pages/NotificationDetail'));
 const Support = lazy(() => import("./Pages/Support"));
+const Trading = lazy(() => import("./Pages/Trading"));
 
 const App = () => {
 
@@ -106,12 +106,6 @@ const App = () => {
                 <Investment />
               </>
             } />
-            <Route path='/investment-detail' element={
-              <>
-                <Header title={"Investment Detail"} />
-                <InvestmentDetail />
-              </>
-            } />
             <Route path='/team-list' element={
               <>
                 <TeamList />
@@ -156,6 +150,12 @@ const App = () => {
               <>
                 <Header title={"Update Profile"} />
                 <UpdateProfile />
+              </>
+            } />
+            <Route path='/trading' element={
+              <>
+                <Header title={"Investment"} />
+                <Trading />
               </>
             } />
             <Route path='/support' element={

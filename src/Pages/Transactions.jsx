@@ -42,7 +42,7 @@ const Transactions = () => {
                 style={{ borderRadius: "10px" }}
                 key={index}
               >
-                <li onClick={() => showDetails(item.id)}>
+                <li onClick={() => showDetails(item.txnid)}>
                   <div className="item">
                     <div className={`icon-box bg-${item.txnstatus === 1 ? "warning" : item.txnstatus === 2 ? "success" : "danger"}`}>
                       <span className="material-symbols-outlined">

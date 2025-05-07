@@ -18,14 +18,14 @@ const TransactionDetail = () => {
             axios.post(`${SITE_URL}/api/get-api/transaction.php`, form).then(resp => {
                 if (resp.data.length > 0) {
 
-                    const filteredData = resp.data.find((item) => Number(item.id) === Number(transactionId));
+                    const filteredData = resp.data.find((item) => String(item.txnid) === String(transactionId));
                     setTransactionData(filteredData)
                     console.log("Transaction Data => ", filteredData);
 
 
                     if (filteredData.txnname.includes("Investment")) {
                         axios.post(`${SITE_URL}/api/get-api/investment.php`, form).then(resp => {
-                            const filteredInv = resp.data.find((INV) => INV.txnid === filteredData.txnid);
+                            const filteredInv = resp.data.find((INV) => String(INV.txnid) === String(transactionId));
                             console.log("INV Data => ", filteredInv);
                             setInvId(filteredInv?.invid);
                         })
@@ -66,18 +66,18 @@ const TransactionDetail = () => {
 
                                     {/*xxxxxxxxxxxxxxxxxxxxxxx Payment Proof xxxxxxxxxxxxxxxxxxxxxxx*/}
                                     {transactionData.txnstatus === 2 && !transactionData.txnname.startsWith("Level") && (
-    <li>
-        <strong>Transaction Proof</strong>
-        <span onClick={() => setShowFullScreen(true)}>
-            <img
-                src={`${SITE_URL}/upload/proofqr/${transactionData.txnproof}`}
-                className="imaged w48 rounded-0"
-                style={{ height: "100%", objectFit: "contain" }}
-                alt="Payment Proof"
-            />
-        </span>
-    </li>
-)}
+                                        <li>
+                                            <strong>Transaction Proof</strong>
+                                            <span onClick={() => setShowFullScreen(true)}>
+                                                <img
+                                                    src={`${SITE_URL}/upload/proofqr/${transactionData.txnproof}`}
+                                                    className="imaged w48 rounded-0"
+                                                    style={{ height: "100%", objectFit: "contain" }}
+                                                    alt="Payment Proof"
+                                                />
+                                            </span>
+                                        </li>
+                                    )}
 
 
                                     {/*xxxxxxxxxxxxxxxxxxxxxxx Payment Proof xxxxxxxxxxxxxxxxxxxxxxx*/}
@@ -105,13 +105,7 @@ const TransactionDetail = () => {
                                         </span>
 
                                     </li>
-                                    {
-                                        transactionData.txnstatus === 3 &&
-                                        <li>
-                                            <strong className="">Remark</strong>
-                                            <span className='text-danger'>{transactionData.txnremarks}</span>
-                                        </li>
-                                    }
+
                                     <li>
                                         <strong className="">Payment Type</strong>
                                         <span className=''>{transactionData.txnname}</span>
@@ -139,6 +133,13 @@ const TransactionDetail = () => {
                                             {transactionData.txnname.startsWith("Level") || transactionData.txnname.startsWith("Withdraw") ? '+' : '-'} ${transactionData.txnamount}
                                         </h3>
                                     </li>
+                                    {
+                                        transactionData.txnstatus === 3 &&
+                                        <li>
+                                            <strong className="">Remark</strong>
+                                            <span className='text-danger'>{transactionData.txnremarks}</span>
+                                        </li>
+                                    }
                                 </ul>
                                 {/* Fullscreen Image Preview */}
                                 {showFullScreen && (

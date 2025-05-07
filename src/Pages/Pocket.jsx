@@ -312,65 +312,79 @@ const Pocket = () => {
       </div>
 
       {/* Transactions */}
-      <div className="mt-4">
-        <div className="section-heading">
-          <h2 className="title">Transactions</h2>
-          <Link to={"/transaction"} className="link">View All</Link>
-        </div>
-        <div className="transactions">
-          {transactionData.length > 0 &&
-            <div className="mt-2">
-              {transactionData.slice(0, 5).map((item, index) => {
-                return (
-                  <ul
-                    className="listview image-listview mt-1"
-                    style={{ borderRadius: "10px" }}
-                    key={index}
-                  >
-                    <li onClick={() => showDetails(item.id)}>
-                      <div className="item">
-                        <div className="icon-box bg-primary">
-                          <span className="material-symbols-outlined">
-                            {item.txnname.startsWith("Level") ||
-                              item.txnname.startsWith("Withdraw")
-                              ? "south_west"
-                              : "call_made"}
-                          </span>
-                        </div>
-                        <div className="in">
-                          <div>
-                            <header>
-                              {item.txnname.includes("Level")
-                                ? "Income"
-                                : item.txnname.includes("Withdraw")
-                                  ? "Credit"
-                                  : item.txnname.includes("Investment") ||
-                                    item.txnname.includes("Purchased Bot")
-                                    ? "Debit"
-                                    : "Transaction"}
-                            </header>
-                            {item.txnname}
-                            <footer>{item.txndate}</footer>
+      {
+        transactionData.length > 0
+          ? (
+            <div className="mt-4">
+              <div className="section-heading">
+                <h2 className="title">Transactions</h2>
+                <Link to={"/transaction"} className="link">View All</Link>
+              </div>
+              <div className="transactions">
+
+                <div className="mt-2">
+                  {transactionData.slice(0, 5).map((item, index) => {
+                    return (
+                      <ul
+                        className="listview image-listview mt-1"
+                        style={{ borderRadius: "10px" }}
+                        key={index}
+                      >
+                        <li onClick={() => showDetails(item.id)}>
+                          <div className="item">
+                            <div className="icon-box bg-primary">
+                              <span className="material-symbols-outlined">
+                                {item.txnname.startsWith("Level") ||
+                                  item.txnname.startsWith("Withdraw")
+                                  ? "south_west"
+                                  : "call_made"}
+                              </span>
+                            </div>
+                            <div className="in">
+                              <div>
+                                <header>
+                                  {item.txnname.includes("Level")
+                                    ? "Income"
+                                    : item.txnname.includes("Withdraw")
+                                      ? "Credit"
+                                      : item.txnname.includes("Investment") ||
+                                        item.txnname.includes("Purchased Bot")
+                                        ? "Debit"
+                                        : "Transaction"}
+                                </header>
+                                {item.txnname}
+                                <footer>{item.txndate}</footer>
+                              </div>
+                              <strong
+                                className={item.txnname.startsWith("Level") || item.txnname.startsWith("Withdraw") ? "text-success" : "text-danger"}
+                              >
+                                {item.txnname.startsWith("Level") ||
+                                  item.txnname.startsWith("Withdraw")
+                                  ? "+"
+                                  : "-"}
+                                ${item.txnamount}
+                              </strong>
+                            </div>
                           </div>
-                          <strong
-                            className={item.txnname.startsWith("Level") || item.txnname.startsWith("Withdraw") ? "text-success" : "text-danger"}
-                          >
-                            {item.txnname.startsWith("Level") ||
-                              item.txnname.startsWith("Withdraw")
-                              ? "+"
-                              : "-"}
-                            ${item.txnamount}
-                          </strong>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                );
-              })}
+                        </li>
+                      </ul>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
-          }
-        </div>
-      </div>
+          )
+          : (
+            <div className="col-12">
+              <div className="card mt-2">
+                <div className="card-body">
+                  You haven't purchased anything yet .
+                </div>
+              </div>
+            </div>
+          )
+      }
+
 
       <Toast msg={showToast.msg} type={showToast.type} show={showToast.show} />
     </div>

@@ -39,7 +39,7 @@ const Investment = () => {
       })
     }
   }, [])
-  
+
 
   const handleSubmit = () => {
 
@@ -69,7 +69,9 @@ const Investment = () => {
   }
 
   const viewInvDetails = (Id) => {
-    navigate("/investment-detail", { state: { invId: Id } })
+    console.log(Id);
+
+    navigate("/transaction-details", { state: { transactionId: Id } })
   }
 
   return (
@@ -103,7 +105,7 @@ const Investment = () => {
           (investmentData.map((item, index) => {
             return (
               <div className="transactions mt-2" key={index}>
-                <a className="item" onClick={() => viewInvDetails(item.id)}>
+                <a className="item" onClick={() => viewInvDetails(item.txnid)}>
                   <div className="detail">
                     <div>
                       <strong>{item.invid}</strong>

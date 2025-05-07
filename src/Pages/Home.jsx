@@ -9,6 +9,7 @@ const Home = () => {
   const navigate = useNavigate();
   const [botStatus, setBotStatus] = useState(0);
   const [timeLeft, setTimeLeft] = useState('00:00:00');
+  const [rank, setRank] = useState(1);
 
   // xxxxxxxxxxxxxxxxxxxxxxxx Bot Starts xxxxxxxxxxxxxxxxxxxxxxxx //
 
@@ -19,8 +20,7 @@ const Home = () => {
 
       axios.post(`${SITE_URL}/api/get-api/update_profile.php`, form)
         .then(resp => {
-          console.log(resp.data);
-
+          setRank(resp.data.rank)
           const botExpiryStr = resp.data.bot_expiry;   // e.g. "05-06-2025"
           const botPurchaseStr = resp.data.bot_pdate;  // e.g. "06-05-2025"
 
@@ -166,7 +166,24 @@ const Home = () => {
               <h2 className="title d-flex justify-content-between align-items-center m-0">
                 <span>VT BOT</span>
               </h2>
-              <span className='text-success'>IBT</span>
+              {
+                rank !== 0 &&
+                <div className='d-flex align-items-center' style={{ fontWeight: "500" }}>
+                  <span
+                    className="material-symbols-outlined"
+                    style={{ fontVariationSettings: '"FILL" 1', fontSize: "16px", color: "gold" }}
+                  >
+                    crown
+                  </span>
+
+                  <span className='text-success ml-1'>
+                    {
+                      rank === 1 ? "IBT" : rank === 2 ? "Rising" : rank === 3 ? "Master" : rank === 4 ? "Rapid" : rank === 5 ? "Million" : rank === 6 ? "Billion" : ""
+                    }
+                  </span>
+                </div>
+              }
+
               <p className={`m-0 p-0`}>
                 Expires in
                 <br />
