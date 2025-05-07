@@ -25,30 +25,15 @@ const accountMenu = [
     },
 ];
 
-const helpSupport = [
+
+const companyDetails = [
 
     {
-        id: 2,
-        title: "Contact Us",
-        icon: "call",
-        path: "/contact-us"
-    },
-    {
-        id: 3,
+        id: 1,
         title: "Support",
         icon: "support_agent",
         path: "/support"
     },
-];
-
-
-const companyDetails = [
-    // {
-    //     id: 1,
-    //     title: "About Us",
-    //     icon: "lightbulb",
-    //     path: "/about-us"
-    // },
     {
         id: 2,
         title: "Terms & Conditions",

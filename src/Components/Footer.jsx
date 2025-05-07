@@ -9,7 +9,7 @@ const Footer = () => {
     { title: "Home", icon: "home_app_logo", path: "/" },
     { title: "Community", icon: "groups", path: "/team" },
     { title: "Investment", icon: "BOT", path: "/" },
-    { title: "Pocket", icon: "attach_money", path: "/earnings" },
+    { title: "Pocket", icon: "account_balance_wallet", path: "/pocket" },
     { title: "Account", icon: "manage_accounts", path: "/profile" },
 
   ];

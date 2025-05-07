@@ -44,7 +44,7 @@ const Transactions = () => {
               >
                 <li onClick={() => showDetails(item.id)}>
                   <div className="item">
-                    <div className="icon-box bg-primary">
+                    <div className={`icon-box bg-${item.txnstatus === 1 ? "warning" : item.txnstatus === 2 ? "success" : "danger"}`}>
                       <span className="material-symbols-outlined">
                         {item.txnname.startsWith("Level") ||
                           item.txnname.startsWith("Withdraw")
@@ -57,10 +57,10 @@ const Transactions = () => {
                         <header>
                           {item.txnname.includes("Level")
                             ? "Income"
-                            : item.txnname.includes("Withdraw")
+                            : item.txnname.includes("Withdraw") ||
+                              item.txnname.includes("Investment")
                               ? "Credit"
-                              : item.txnname.includes("Investment") ||
-                                item.txnname.includes("Purchased Bot")
+                              : item.txnname.includes("Purchased Bot")
                                 ? "Debit"
                                 : "Transaction"}
                         </header>

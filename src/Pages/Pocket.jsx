@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { SITE_URL, isAuthenticated } from "../Auth/Define";
 import axios from "axios";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Toast from "../Components/Toast";
 
-const Home = () => {
+const Pocket = () => {
 
   const navigate = useNavigate()
   const [userData, setUserData] = useState(null);
@@ -30,7 +30,8 @@ const Home = () => {
 
       // xxxxxxxxxx Get Wallet amount xxxxxxxxxx //
       axios.post(`${SITE_URL}/api/get-api/withdraw.php`, form).then(resp => {
-        setWithdrawStatus(resp.data?.wstatus !== 1)
+
+        setWithdrawStatus(resp.data[0]?.wstatus !== 1)
 
       })
 
@@ -122,7 +123,8 @@ const Home = () => {
             <h1 className="total">$ {userData?.wallet_amount === null ? 0.00 : userData?.wallet_amount}</h1>
           </div>
           <div className="right" >
-            <a className="button" data-bs-toggle="modal">
+            <a className="button" data-bs-toggle="modal" data-toggle="modal"
+              data-target="#depositActionSheet">
               <span className="material-symbols-outlined">
                 arrow_downward
               </span>
@@ -130,7 +132,7 @@ const Home = () => {
           </div>
 
         </div>
-        <div className="wallet-footer">
+        {/* <div className="wallet-footer ">
           <div className="item">
             <a data-bs-toggle="modal" data-toggle="modal"
               data-target="#depositActionSheet">
@@ -173,7 +175,7 @@ const Home = () => {
             </a>
           </div>
 
-        </div>
+        </div> */}
       </div>
 
 
@@ -375,4 +377,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Pocket;

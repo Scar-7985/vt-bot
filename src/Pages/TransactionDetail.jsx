@@ -9,6 +9,7 @@ const TransactionDetail = () => {
     const { transactionId } = location.state;
     const [transactionData, setTransactionData] = useState(null);
     const [invId, setInvId] = useState(null);
+    const [showFullScreen, setShowFullScreen] = useState(false);
 
     useEffect(() => {
         if (isAuthenticated) {
@@ -40,7 +41,7 @@ const TransactionDetail = () => {
 
 
     return (
-        <div className='section'>
+        <div className='section pb-5'>
             {
                 transactionData ?
 
@@ -57,10 +58,30 @@ const TransactionDetail = () => {
                                             </span>
                                         </div>
                                     </div>
-                                    <h3 className="text-center mt-2">Payment Info</h3>
+                                    <h3 className="text-center mt-2">Transaction Info</h3>
                                 </div>
 
                                 <ul className="listview flush transparent simple-listview no-space mt-3">
+
+
+                                    {/*xxxxxxxxxxxxxxxxxxxxxxx Payment Proof xxxxxxxxxxxxxxxxxxxxxxx*/}
+                                    {transactionData.txnstatus === 2 && !transactionData.txnname.startsWith("Level") && (
+    <li>
+        <strong>Transaction Proof</strong>
+        <span onClick={() => setShowFullScreen(true)}>
+            <img
+                src={`${SITE_URL}/upload/proofqr/${transactionData.txnproof}`}
+                className="imaged w48 rounded-0"
+                style={{ height: "100%", objectFit: "contain" }}
+                alt="Payment Proof"
+            />
+        </span>
+    </li>
+)}
+
+
+                                    {/*xxxxxxxxxxxxxxxxxxxxxxx Payment Proof xxxxxxxxxxxxxxxxxxxxxxx*/}
+
                                     <li>
                                         <strong className="">Status</strong>
                                         <span
@@ -119,7 +140,35 @@ const TransactionDetail = () => {
                                         </h3>
                                     </li>
                                 </ul>
-
+                                {/* Fullscreen Image Preview */}
+                                {showFullScreen && (
+                                    <div
+                                        className="bg-dark"
+                                        style={{
+                                            position: "fixed",
+                                            top: "56px",
+                                            left: 0,
+                                            right: 0,
+                                            bottom: 0,
+                                            zIndex: 9999,
+                                            overflowY: "auto",
+                                            padding: "20px",
+                                        }}
+                                        onClick={() => setShowFullScreen(false)}
+                                    >
+                                        <div className="d-flex justify-content-center align-items-start" style={{ minHeight: "100%" }}>
+                                            <img
+                                                src={`${SITE_URL}/upload/proofqr/${transactionData.txnproof}`}
+                                                alt="Full Screen Proof"
+                                                style={{
+                                                    width: "auto",
+                                                    height: "auto",
+                                                    maxWidth: "100%",
+                                                }}
+                                            />
+                                        </div>
+                                    </div>
+                                )}
 
                             </div>
                         </div>

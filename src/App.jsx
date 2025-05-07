@@ -19,7 +19,7 @@ const Transaction = lazy(() => import("./Pages/Transactions"));
 const TransactionDetail = lazy(() => import("./Pages/TransactionDetail"));
 const Team = lazy(() => import("./Pages/Team"));
 const Refer = lazy(() => import("./Pages/Refer"));
-const Earnings = lazy(() => import('./Pages/Earnings'));
+const Pocket = lazy(() => import('./Pages/Pocket'));
 const TeamList = lazy(() => import("./Pages/TeamList"));
 const LevelList = lazy(() => import("./Pages/LeveList"));
 const PurchaseBotUI = lazy(() => import("./Pages/PurchaseBotUI"))
@@ -29,6 +29,7 @@ const InvestmentDetail = lazy(() => import('./Pages/InvestmentDetail'));
 const Investment = lazy(() => import('./Pages/Investment'));
 const Notification = lazy(() => import('./Pages/Notification'));
 const NotificationDetail = lazy(() => import('./Pages/NotificationDetail'));
+const Support = lazy(() => import("./Pages/Support"));
 
 const App = () => {
 
@@ -83,7 +84,7 @@ const App = () => {
             } />
             <Route path='/transaction-details' element={
               <>
-                <Header title={"Transaction View"} />
+                <Header title={"Transaction Info"} />
                 <TransactionDetail />
               </>
             } />
@@ -133,13 +134,12 @@ const App = () => {
                 <KycVerification />
               </>
             } />
-            <Route path='/earnings' element={
+            <Route path='/pocket' element={
               <>
                 <Header title={"Pocket"} />
-                <Earnings />
+                <Pocket />
               </>
             } />
-
             <Route path='/refer' element={
               <>
                 <Header title={"Refer & Earn"} />
@@ -158,9 +158,15 @@ const App = () => {
                 <UpdateProfile />
               </>
             } />
+            <Route path='/support' element={
+              <>
+                <Header title={"Support"} />
+                <Support />
+              </>
+            } />
             <Route path='/profile' element={
               <>
-                <Header title={"Profile"} />
+                <Header title={"Account"} />
                 <Profile />
               </>
             } />

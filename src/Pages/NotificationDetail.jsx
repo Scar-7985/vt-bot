@@ -34,16 +34,9 @@ const NotificationDetail = () => {
             <div className='card mt-3 mb-2'>
               <div className="card-body">
                 <div className="listed-detail mt-3">
-                  <div className="icon-wrapper">
-                    <div className="iconbox">
-                      <span className="material-symbols-outlined">
-                        mail
-                      </span>
-                    </div>
-                  </div>
                   <h3 className="text-center mt-2">{notificationData.title}</h3>
                 </div>
-                <p className='mt-2' dangerouslySetInnerHTML={{ __html: notificationData.description }} />
+                <p className='mt-3' dangerouslySetInnerHTML={{ __html: notificationData.description }} />
               </div>
             </div>
           ) : (
