@@ -27,9 +27,7 @@ const SignUp = () => {
       const form = new FormData();
       form.append("cuid", formData.referal);
       axios.post(`${SITE_URL}/api/get-api/update_profile.php`, form).then(resp => {
-        if (resp.data.msg === "success") {
           setReferedBy(resp.data.name);
-        }
       });
     }
   }, [formData.referal]);
@@ -249,11 +247,12 @@ const SignUp = () => {
                         style={{ fontSize: "14px" }}
                       />
                     </div>
-                    {referedBy && (
+                    {
+                      referedBy &&
                       <span className='text-success' style={{ fontSize: '12px' }}>
-                        {`Referred by ${referedBy}`}
+                        {referedBy}
                       </span>
-                    )}
+                    }
                   </div>
 
                   <div className="form-group mt-2">

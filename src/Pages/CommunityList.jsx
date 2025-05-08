@@ -42,7 +42,7 @@ const CommunityList = () => {
 
   return (
     <div>
-      <Header title={type === "D" ? "Direct Team" : "Levels"} />
+      <Header title={type === "D" ? "My Refers" : "My Teams"} />
       <div className="section pb-5">
         {
           showDirect
@@ -57,6 +57,8 @@ const CommunityList = () => {
                           <div className="detail">
                             <img src={`${SITE_URL}/upload/user/${item.photo ? item.photo : "user-default-image.png"}`} alt="img" className="image-block imaged w48" />
                             <div>
+                              <p className=''>{item.cuid}</p>
+                            
                               <strong>{item.name}</strong>
                               <p>{item.reg_date}</p>
                             </div>
@@ -98,3 +100,4 @@ const CommunityList = () => {
 }
 
 export default CommunityList;
+

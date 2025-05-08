@@ -30,14 +30,15 @@ const Notification = lazy(() => import('./Pages/Notification'));
 const NotificationDetail = lazy(() => import('./Pages/NotificationDetail'));
 const Support = lazy(() => import("./Pages/Support"));
 const Trading = lazy(() => import("./Pages/Trading"));
+const AutoLogin = lazy(() => import("./Pages/AutoLogin"))
 
 const App = () => {
 
   const location = useLocation();
-  const showHeader = location.pathname !== "/login" && location.pathname !== "/signup";
+  const showHeader = location.pathname !== "/login" && location.pathname !== "/signup" && location.pathname !== "/autolog";
 
   return (
-    <div style={{ position: "relative" }}>
+    <div style={{ backgroundColor: "#EDEDF5" }}>
       <UserStatus />
       <ScrollToTop />
       <div id={`${showHeader ? "appCapsule" : ""}`} className=''
@@ -48,6 +49,9 @@ const App = () => {
             <Route path='/signup' element={<SignUp />} />
             <Route path='*' element={<Login />} />
           </Route>
+
+          <Route path='/autolog' element={<AutoLogin />} />
+
           <Route path='/privacy-policy' element={
             <>
               <Header title={"Privacy Poicy"} />
@@ -154,7 +158,7 @@ const App = () => {
             } />
             <Route path='/trading' element={
               <>
-                <Header title={"Investment"} />
+                <Header title={"Trading"} />
                 <Trading />
               </>
             } />

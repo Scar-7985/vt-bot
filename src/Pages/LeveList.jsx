@@ -20,7 +20,8 @@ const LeveList = () => {
         }
     }, [])
 
-
+  console.log(leveList);
+  
     return (
         <div className='section pb-5'>
             <Header title={`Level ${viewId + 1}`} />
@@ -32,6 +33,7 @@ const LeveList = () => {
                                 <div className="detail">
                                     <img src={`${SITE_URL}/upload/user/${item.photo ? item.photo : "user-default-image.png"}`} alt="img" className="image-block imaged w48" />
                                     <div>
+                                    <p>{item.cuid}</p>
                                         <strong>{item.name}</strong>
                                         <p>{item.reg_date}</p>
                                     </div>

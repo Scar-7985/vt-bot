@@ -33,7 +33,9 @@
   --font-family-monospace:SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace; }
 
 *, ::after, ::before {
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  max-width: 24rem;
+}
 
 html {
   font-family: sans-serif;
@@ -52,7 +54,8 @@ body {
   line-height: 1.5;
   color: #212529;
   text-align: left;
-  background-color: #fff; }
+  background-color: #fff;
+ }
 
 [tabindex="-1"]:focus {
   outline: 0 !important; }
@@ -7521,13 +7524,15 @@ body {
   line-height: 1.6rem;
   letter-spacing: 0.004em;
   color: #958d9e;
-  background: #EDEDF5;
+  /* background: #EDEDF5; */
+  background-color: #000;
   width: 100%;
   height: 100%;
   overflow-x: hidden;
   user-select: none;
   -moz-user-select: none;
-  -webkit-user-select: none; }
+  -webkit-user-select: none;
+ }
 
 a {
   transition: .2s all;

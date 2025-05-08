@@ -73,19 +73,19 @@ const Community = () => {
 
   return (
     <div className="section">
-    
+   
       <div className="row mt-2">
        
         <div className="col-6">
-          <div className="stat-box" onClick={() => viewTeam("L")}>
+          <div className="stat-box" onClick={() => viewTeam("D")}>
             <div className="title">Total Referals</div>
-            <div className="value text-danger" style={{ fontSize: "16px" }}>{totalTeam} Members</div>
+            <div className="value text-danger" style={{ fontSize: "16px" }}>{directTeam} Members</div>
           </div>
         </div>
         <div className="col-6">
-          <div className="stat-box" onClick={() => viewTeam("D")}>
+          <div className="stat-box" onClick={() => viewTeam("L")}>
             <div className="title">Total Community</div>
-            <div className="value text-success" style={{ fontSize: "16px" }}>{directTeam} Members</div>
+            <div className="value text-success" style={{ fontSize: "16px" }}>{totalTeam} Members</div>
           </div>
         </div>
       </div>

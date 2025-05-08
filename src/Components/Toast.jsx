@@ -10,7 +10,7 @@ const Toast = ({ msg, type, show = false }) => {
             className={`${show ? "d-flex" : "d-none"} justify-content-between align-items-center px-2 bg-${type}`}
             style={{
                 position: 'fixed',
-                margin: "auto",
+                // margin: "auto",
                 left: '0',
                 right: '0',
                 height: '56px',

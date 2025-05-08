@@ -37,10 +37,7 @@ const Refer = () => {
                 Refer your friends <br /> and Earn
               </h2>
               <img src="assets/img/gift.png" width={"200px"} alt="" />
-              <p className="fs-8 text-dark" style={{ lineHeight: "17px" }}>
-                Your friend gets 100 timesPoints on sign up and, You get 100
-                Timespoints too everytime
-              </p>
+
             </div>
 
             <div

@@ -11,22 +11,26 @@ const TransactionDetail = () => {
     const [invId, setInvId] = useState(null);
     const [showFullScreen, setShowFullScreen] = useState(false);
 
+    console.log(transactionId);
+
+
     useEffect(() => {
         if (isAuthenticated) {
             const form = new FormData();
             form.append("cuid", isAuthenticated)
             axios.post(`${SITE_URL}/api/get-api/transaction.php`, form).then(resp => {
+
                 if (resp.data.length > 0) {
 
                     const filteredData = resp.data.find((item) => String(item.txnid) === String(transactionId));
                     setTransactionData(filteredData)
-                    console.log("Transaction Data => ", filteredData);
+                    // console.log("Transaction Data => ", filteredData);
 
 
                     if (filteredData.txnname.includes("Investment")) {
                         axios.post(`${SITE_URL}/api/get-api/investment.php`, form).then(resp => {
                             const filteredInv = resp.data.find((INV) => String(INV.txnid) === String(transactionId));
-                            console.log("INV Data => ", filteredInv);
+                            // console.log("INV Data => ", filteredInv);
                             setInvId(filteredInv?.invid);
                         })
                     }
@@ -138,6 +142,13 @@ const TransactionDetail = () => {
                                         <li>
                                             <strong className="">Remark</strong>
                                             <span className='text-danger'>{transactionData.txnremarks}</span>
+                                        </li>
+                                    }
+                                    {
+                                        transactionData.txnstatus === 2 && transactionData.txnname.startsWith("Level") &&
+                                        <li>
+                                            <strong className="">Remark</strong>
+                                            <span className='text-success'>{transactionData.txnremarks}</span>
                                         </li>
                                     }
                                 </ul>
