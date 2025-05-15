@@ -4,6 +4,7 @@ import { SITE_URL, isAuthenticated } from '../Auth/Define';
 import axios from 'axios';
 import './Hourglass.css';
 import LottieGIF from '../Components/LottieGIF';
+import LottieLoading from "../Components/LottieLoading";
 
 const Bot = () => {
     const navigate = useNavigate();
@@ -13,6 +14,7 @@ const Bot = () => {
     const [timeLeft, setTimeLeft] = useState('00:00:00');
     const [botStatus, setBotStatus] = useState(0);
     const [rejectedReason, setRejectedReason] = useState(null);
+    const [acceptance, setAcceptance] = useState(false);
 
     // Fetch bot data and profile info
 
@@ -28,7 +30,6 @@ const Bot = () => {
                         bot_expiry: resp.data.bot_expiry,
                         status: resp.data.status,
                     })
-
                     const botExpiryStr = resp.data.bot_expiry;   // e.g. "05-06-2025"
                     const botPurchaseStr = resp.data.bot_pdate;  // e.g. "06-05-2025"
 
@@ -46,7 +47,6 @@ const Bot = () => {
                         if (remainingMs <= 0) {
                             setTimeLeft("00:00:00");
                             clearInterval(timerInterval);
-                            navigate('/purchase-bot');
                         } else {
                             const totalSeconds = Math.floor(remainingMs / 1000);
                             const days = (Math.floor(totalSeconds / (3600 * 24)) - 1);
@@ -82,6 +82,8 @@ const Bot = () => {
             const form = new FormData();
             form.append('cuid', isAuthenticated);
             axios.post(`${SITE_URL}/api/get-api/bot.php`, form).then(resp => {
+
+
                 setBotData(resp.data)
             })
         }
@@ -108,7 +110,7 @@ const Bot = () => {
     const checkKycStatus = () => {
 
         if (isAuthenticated && botData) {
-            navigate("/purchase", { state: { prevPath: "/bot" } });
+            navigate("/purchase", { state: { prevPath: "/bot",  } });
         };
     }
 
@@ -134,9 +136,8 @@ const Bot = () => {
         <div className='section'>
             {botData ? (
                 <div className="">
+                    {/* xxxxxxxxxxxxxxxxx Bot Details xxxxxxxxxxxxxxxxx */}
                     {
-                        (botStatus === 0 || botStatus === 4) &&
-
                         <div className="bill-box mt-2">
                             <div className="img-wrapper d-flex flex-column align-items-center">
                                 <div style={{ width: "100px" }}>
@@ -145,90 +146,30 @@ const Bot = () => {
                                 <h3 className="mt-1">Trading Bot</h3>
                             </div>
 
-                            <div className="d-flex justify-content-between mt-4">
-                                <strong>Amount</strong>
-                                <p className="m-0 fs-8 fw-bold">${botData.amount}</p>
-                            </div>
+                            {(botStatus === 0 || botStatus === 3 || botStatus === 4) ? (
+                                <>
+                                    <div className="d-flex justify-content-between mt-4">
+                                        <strong>Amount</strong>
+                                        <p className="m-0 fs-8 fw-bold">${botData.amount}</p>
+                                    </div>
 
-                            <div className="d-flex justify-content-between">
-                                <strong>Validity</strong>
-                                <p className="m-0 fs-8">{botData.duration} days</p>
-                            </div>
-                            <div className="d-flex justify-content-between">
-                                <strong>Status</strong>
-                                <strong className={`m-0 fs-8 text-${botStatus === 1 ? "warning" : botStatus === 2 ? "success" : "danger"}`}>
-                                    {
-                                        botStatus === 1
-                                            ? "In Review"
-                                            : botStatus === 2
-                                                ? "Active"
-                                                : botStatus === 3
-                                                    ? "Rejected"
-                                                    : botStatus === 4
-                                                        ? "Expired"
-                                                        : "Not purchased yet"
-                                    }
-                                </strong>
-                            </div>
-
-
-                            {/* Payment Options */}
-                            {
-                                (botStatus === 0 || botStatus === 3 || botStatus === 4) &&
-                                <div className="mt-2 d-flex align-items-center justify-content-between">
-                                    <label htmlFor="upi" className="w-100 d-flex align-items-center">
-                                        <input type="radio" id="upi" defaultChecked />
-                                        <strong className="ml-2">UPI</strong>
-                                    </label>
-                                    <label htmlFor="wallet" className="w-100 d-flex align-items-center">
-                                        <input type="radio" id="wallet" disabled />
-                                        <strong className="ml-2">Wallet</strong>
-                                    </label>
-                                </div>
-                            }
-
-
-                            {/* Main Action Button */}
-                            <a
-                                className={`btn ${botStatus === 1 || botStatus === 2 ? "d-none" : ""} btn-primary btn-block mt-2`}
-                                onClick={(botStatus === 0 || botStatus === 3 || botStatus === 4) ? checkKycStatus : null}
-                            >
-                                Buy Now
-                            </a>
-
-
-
-
-
-                            {/* Rejection Reason */}
-                            {botStatus === 3 && (
-                                <div className='mt-2'>
-                                    Your previous bot was rejected. <br />
-                                    <strong style={{ fontSize: '14px' }}>Reason: </strong>
-                                    <span className='m-0 text-danger'>{rejectedReason}</span>
-                                </div>
+                                    <div className="d-flex justify-content-between">
+                                        <strong>Validity</strong>
+                                        <p className="m-0 fs-8">{botData.duration} days</p>
+                                    </div>
+                                </>
+                            ) : (
+                                <>
+                                    <div className="d-flex justify-content-between mt-4">
+                                        <strong>Purchased Date</strong>
+                                        <p className="m-0 fs-8 fw-bold">{pBotData?.bot_pdate}</p>
+                                    </div>
+                                    <div className="d-flex justify-content-between">
+                                        <strong>Expiry</strong>
+                                        <p className="m-0 fs-8 fw-bold">{pBotData?.bot_expiry}</p>
+                                    </div>
+                                </>
                             )}
-                        </div>
-                    }
-
-                    {
-                        (botStatus !== 0 && botStatus !== 4) &&
-                        <div className="bill-box mt-2">
-                            <div className="img-wrapper d-flex flex-column align-items-center">
-                                <div style={{ width: "100px" }}>
-                                    <LottieGIF />
-                                </div>
-                                <h3 className="mt-1">Trading BOT</h3>
-                            </div>
-
-                            <div className="d-flex justify-content-between mt-4">
-                                <strong>Purchased Date</strong>
-                                <p className="m-0 fs-8 fw-bold">{pBotData?.bot_pdate}</p>
-                            </div>
-                            <div className="d-flex justify-content-between">
-                                <strong>Expiry</strong>
-                                <p className="m-0 fs-8 fw-bold">{pBotData?.bot_expiry}</p>
-                            </div>
 
                             <div className="d-flex justify-content-between">
                                 <strong>Status</strong>
@@ -247,43 +188,47 @@ const Bot = () => {
                                 </strong>
                             </div>
 
-
-                            {/* Payment Options */}
-                            {
-                                (botStatus !== 1 && botStatus !== 2) &&
-                                <div className="mt-2 d-flex align-items-center justify-content-between">
-                                    <label htmlFor="upi" className="w-100 d-flex align-items-center">
-                                        <input type="radio" id="upi" defaultChecked />
-                                        <strong className="ml-2">UPI</strong>
-                                    </label>
-                                    <label htmlFor="wallet" className="w-100 d-flex align-items-center">
-                                        <input type="radio" id="wallet" disabled />
-                                        <strong className="ml-2">Wallet</strong>
-                                    </label>
+                            {/* Main Action Button */}
+                            {(botStatus === 0 || botStatus === 3 || botStatus === 4) &&
+                                <div className="form-group mt-2">
+                                    <div className="custom-control custom-checkbox">
+                                        <input
+                                            type="checkbox"
+                                            className="custom-control-input"
+                                            id="termsCheck"
+                                            checked={acceptance}
+                                            onChange={() => setAcceptance(!acceptance)}
+                                        />
+                                        <label className="custom-control-label" htmlFor="termsCheck" style={{ fontSize: "12px" }}>
+                                            I'm ready to proceed with the <strong>${botData.amount}</strong> Payment?
+                                        </label>
+                                    </div>
                                 </div>
                             }
 
 
-                            {/* Main Action Button */}
-                            <a
+                            <button
                                 className={`btn ${botStatus === 1 || botStatus === 2 ? "d-none" : ""} btn-primary btn-block mt-2`}
                                 onClick={(botStatus === 0 || botStatus === 3 || botStatus === 4) ? checkKycStatus : null}
+                                disabled={!acceptance}
                             >
                                 Buy Now
-                            </a>
+                            </button>
 
-
-                            {/* Hourglass Loader  */}
+                            {/* Hourglass Loader */}
                             {
                                 botStatus === 1 &&
                                 <div>
-                                    <div className={`w-100 mt-2 bg-dark p-2 rounded d-flex flex-column justify-content-center align-items-center`}>
+                                    {/* <div className={`w-100 mt-2 bg-dark p-2 rounded d-flex flex-column justify-content-center align-items-center`}>
                                         <div className="hourglass"></div>
+                                    </div> */}
+                                    <div className='mx-auto' style={{width: "140px"}}>
+                                    <LottieLoading />
                                     </div>
                                     <h5 className='mt-2'>Your bot purchase is in review.</h5>
+                                    <Link to={"/transaction"} className='btn btn-primary btn-block'>Check Transaction Details</Link>
                                 </div>
                             }
-
 
                             {/* Rejection Reason */}
                             {botStatus === 3 && (
@@ -295,6 +240,7 @@ const Bot = () => {
                             )}
                         </div>
                     }
+
 
 
                     {/* xxxxxxxxxxxxx Countdown Timer xxxxxxxxxxxxx */}

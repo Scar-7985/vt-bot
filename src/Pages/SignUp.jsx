@@ -27,7 +27,7 @@ const SignUp = () => {
       const form = new FormData();
       form.append("cuid", formData.referal);
       axios.post(`${SITE_URL}/api/get-api/update_profile.php`, form).then(resp => {
-          setReferedBy(resp.data.name);
+        setReferedBy(resp.data.name);
       });
     }
   }, [formData.referal]);
@@ -60,13 +60,16 @@ const SignUp = () => {
 
     axios.post(`${SITE_URL}/api/post-api/registration.php`, newData).then(resp => {
       if (resp.data.status === 100 && resp.data.msg.includes("OTP")) {
+        setToast({ msg: resp.data.msg, type: "success", show: true });
         setShowOtp(true);
         setTimer(30);
       } else if (resp.data.status === 100 && resp.data.msg === "Register Successfully.") {
         const loginId = resp.data[0].cuid;
         const uName = resp.data[0].name;
+        const uemail = resp.data[0].email;
         window.localStorage.setItem("userId:", loginId);
         window.localStorage.setItem("userName:", uName);
+        window.localStorage.setItem("userEmail:", uemail);
         setToast({ msg: "Logging you in", type: "success", show: true });
         setTimeout(() => window.location.reload(), 2000);
       } else {
@@ -134,7 +137,7 @@ const SignUp = () => {
 
   return (
     <div className='bg-white' style={{ height: "100vh" }}>
-      <div className='text-center m-auto' style={{width: "200px"}}>
+      <div className='text-center m-auto' style={{ width: "200px" }}>
         <LottieGIF />
       </div>
 
@@ -144,9 +147,15 @@ const SignUp = () => {
             <div className="pb-1">
               <div className="py-0 mb-3">
                 <h2 className='mb-0 text-center'>{showOtp ? "Verify OTP" : "Register"}</h2>
-                <p className='text-center text-muted' style={{ fontSize: "13px" }}>
-                  {showOtp ? "If you don't see the OTP in your inbox, please check your spam or junk folder." : "Fill the form to get registered"}
-                </p>
+
+                <div className='text-center text-muted' style={{ fontSize: "13px" }}>
+                  {showOtp ? (
+                    <p>
+                      OTP has been sent to <strong className="text-dark">{formData.email}</strong>.<br />
+                      If you don't see it in your inbox, please check your spam folder.
+                    </p>
+                  ) : "Fill the form to get registered"}
+                </div>
               </div>
 
               {showOtp && (

@@ -1,9 +1,8 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { SITE_URL, isAuthenticated } from '../Auth/Define';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Toast from '../Components/Toast';
-import FakeGraph from '../Components/FakeGraph';
 
 const Investment = () => {
 
@@ -13,6 +12,7 @@ const Investment = () => {
   const [amount, setAmount] = useState(5);
   const [totalInvestment, setTotalInvestment] = useState(null)
   const [investmentData, setInvestmentData] = useState([]);
+  const [acceptance, setAcceptance] = useState(false);
   const [showToast, setShowToast] = useState({
     msg: "",
     type: "",
@@ -30,7 +30,28 @@ const Investment = () => {
 
       axios.post(`${SITE_URL}/api/get-api/investment.php`, form).then(resp => {
         if (resp.data.length > 0) {
-          setInvestmentData(resp.data);
+          const investments = resp.data;
+
+          axios.post(`${SITE_URL}/api/get-api/transaction.php`, form).then(tranResp => {
+            const transactions = tranResp.data;
+
+            // Create a map: txnid -> txnstatus
+            const txnStatusMap = {};
+            transactions.forEach(txn => {
+              txnStatusMap[txn.txnid] = txn.txnstatus;
+            });
+
+            // Update investment.invstatus to match corresponding txnstatus
+            const correctedInvestments = investments.map(investment => {
+              const txnStatus = txnStatusMap[investment.txnid];
+              if (txnStatus !== undefined && investment.invstatus !== txnStatus) {
+                return { ...investment, invstatus: txnStatus }; // override wrong status
+              }
+              return investment; // keep original if no mismatch
+            });
+
+            setInvestmentData(correctedInvestments);
+          });
         }
       })
 
@@ -44,20 +65,20 @@ const Investment = () => {
   const handleSubmit = () => {
 
     if (isAuthenticated && botStatus) {
-      if (Number(amount) < 5) {
-        setShowToast({ msg: "Amount cannot be less than $5", type: "danger", show: true });
-      } else if (Number(amount) > 10000) {
-        setShowToast({ msg: "Amount cannot be more than $10000", type: "danger", show: true });
-      }
-      else {
-        navigate("/purchase", {
-          state: {
-            prevPath: location.pathname,
-            currency: "UPI",
-            amount: Number(amount)
-          }
-        })
-      }
+      // if (Number(amount) < 5) {
+      //   setShowToast({ msg: "Amount cannot be less than $5", type: "danger", show: true });
+      // } else if (Number(amount) > 10000) {
+      //   setShowToast({ msg: "Amount cannot be more than $10000", type: "danger", show: true });
+      // }
+      // else {
+      // setShowToast({ msg: "Investment is temporarily locked.", type: "danger", show: true });
+      navigate("/purchase", {
+        state: {
+          prevPath: location.pathname,
+          amount: Number(amount)
+        }
+      })
+      // }
 
     } else {
       navigate("/bot")
@@ -69,10 +90,9 @@ const Investment = () => {
   }
 
   const viewInvDetails = (Id) => {
-    console.log(Id);
-
     navigate("/transaction-details", { state: { transactionId: Id } })
   }
+
 
   return (
     <div className='section pb-5'>
@@ -98,7 +118,10 @@ const Investment = () => {
 
 
       {/* xxxxxxxxxxx Investment List xxxxxxxxxxx */}
-
+      <div className="section-heading mt-3">
+        <h2 className="title">Transactions</h2>
+        <Link to={"/transaction"} className="link">View All</Link>
+      </div>
       {
         investmentData.length > 0 ?
 
@@ -158,6 +181,7 @@ const Investment = () => {
 
                   <div className="form-group basic ">
                     <label className="label">Enter Amount ($5 - $10000)</label>
+
                     <div className="input-group mb-3">
                       <div className="input-group-prepend">
                         <span
@@ -176,12 +200,28 @@ const Investment = () => {
                     </div>
                   </div>
 
+                  <div className="form-group mt-2">
+                    <div className="custom-control custom-checkbox">
+                      <input
+                        type="checkbox"
+                        className="custom-control-input"
+                        id="termsCheck"
+                        checked={acceptance}
+                        onChange={() => setAcceptance(!acceptance)}
+                      />
+                      <label className="custom-control-label" htmlFor="termsCheck" style={{ fontSize: "12px" }}>
+                        I'm ready to proceed with the <strong>${amount}</strong> Investment?
+                      </label>
+                    </div>
+                  </div>
+
                   <div className="form-group basic">
                     <button
                       type="submit"
                       className="btn btn-block btn-lg btn-warning"
                       data-dismiss="modal"
                       onClick={handleSubmit}
+                      disabled={!acceptance}
                     >
                       Invest
                     </button>
@@ -194,7 +234,6 @@ const Investment = () => {
       </div>
       {/* Modal section end */}
 
-      {/* <FakeGraph /> */}
       <Toast msg={showToast.msg} type={showToast.type} show={showToast.show} />
     </div>
   )

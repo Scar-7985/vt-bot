@@ -21,7 +21,8 @@ const KycVerification = () => {
     ifsc: "",
     bank: "",
     upi: "",
-    wallet: ""
+    wallet: "",
+    account_holder: ""
   })
   const [toast, setToast] = useState({
     msg: "",
@@ -66,6 +67,7 @@ const KycVerification = () => {
     newData.append("ifsc", formData.ifsc);
     newData.append("bank_ac", formData.account);
     newData.append("bank_name", formData.bank);
+    newData.append("name", formData.account_holder);
     if (!oneTimeProof) {
       newData.append("status", showUpdateProof ? 0 : 1);
     }
@@ -104,7 +106,6 @@ const KycVerification = () => {
       const newData = new FormData();
       newData.append("cuid", isAuthenticated);
       axios.post(`${SITE_URL}/api/get-api/update_kyc.php`, newData).then(resp => {
-
         if (resp.data.status === 101) {
         } else {
           setOneTimeProof(false);
@@ -118,6 +119,7 @@ const KycVerification = () => {
             bank: resp.data.bank_name || "",
             upi: resp.data.upi_id || "",
             wallet: resp.data.wallet_address || "",
+            account_holder: resp.data.name || "",
           });
         }
 
@@ -144,11 +146,11 @@ const KycVerification = () => {
               <label className="label">Upload Id Proof ( Aadhaar/ Pan Card )</label>
               <label htmlFor={`${!showUpdateProof ? 'document' : ''}`}
                 className='rounded d-flex justify-content-center align-items-center w-100'
-                style={{ border: `${!showUpdateProof ? '2px dashed blue' : ''}`, height: "200px" }}>
+                style={{ border: `${!showUpdateProof ? '2px dashed blue' : ''}`, minHeight: "200px" }}>
                 {
                   showChangeImage
-                    ? <img src={showChangeImage} alt="Preview" style={{ height: "100%" }} />
-                    : proofImg ? <img src={`${SITE_URL}/upload/idproof/${proofImg}`} alt="Document" style={{ height: "100%" }} />
+                    ? <img src={showChangeImage} alt="Preview" style={{ height: "100%", width: "100%" }} />
+                    : proofImg ? <img src={`${SITE_URL}/upload/idproof/${proofImg}`} alt="Document" style={{ height: "100%", width: "100%" }} />
                       :
                       <span className="material-symbols-outlined" style={{ fontSize: "50px" }}>
                         cloud_upload
@@ -197,6 +199,24 @@ const KycVerification = () => {
 
               <div className="form-group boxed">
                 <div className="input-wrapper">
+                  <label className="label" htmlFor="account_holder">
+                    Account Holder
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Account holder"
+                    name="account_holder"
+
+                    value={formData.account_holder}
+                    onChange={handleChange}
+                    style={{ fontSize: "14px" }}
+                  />
+                </div>
+              </div>
+
+              <div className="form-group boxed">
+                <div className="input-wrapper">
                   <label className="label" htmlFor="account">
                     Account number
                   </label>
@@ -211,6 +231,7 @@ const KycVerification = () => {
                   />
                 </div>
               </div>
+
 
               <div className="form-group boxed">
                 <div className="input-wrapper">
@@ -304,14 +325,14 @@ const KycVerification = () => {
         </div>
       </form>
       {/* xxxxxxxxxxxxxx */}
-{
-  loading &&
+      {
+        loading &&
 
-      <div className="modal fade dialogbox show d-flex justify-content-center align-items-center" tabIndex="-1" role="dialog" style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}>
-      <div class="spinner-border text-warning" role="status" 
-      style={{width: "50px", height: "50px", borderWidth: "4px"}}></div>
-      </div>
-}
+        <div className="modal fade dialogbox show d-flex justify-content-center align-items-center" tabIndex="-1" role="dialog" style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}>
+          <div class="spinner-border text-warning" role="status"
+            style={{ width: "50px", height: "50px", borderWidth: "4px" }}></div>
+        </div>
+      }
 
       {/* xxxxxxxxxxxxxx */}
       <Toast msg={toast.msg} type={toast.type} show={toast.show} />

@@ -85,7 +85,7 @@ const Community = () => {
         <div className="col-6">
           <div className="stat-box" onClick={() => viewTeam("L")}>
             <div className="title">Total Community</div>
-            <div className="value text-success" style={{ fontSize: "16px" }}>{totalTeam} Members</div>
+            <div className="value text-success" style={{ fontSize: "16px" }}>{totalTeam} Community</div>
           </div>
         </div>
       </div>

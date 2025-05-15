@@ -15,6 +15,7 @@ const Transactions = () => {
       axios
         .post(`${SITE_URL}/api/get-api/transaction.php`, newData)
         .then((resp) => {
+          
           if (resp.data.length > 0) {
             setTransactionData(resp.data);
           } else {
@@ -93,13 +94,11 @@ const Transactions = () => {
       ) : (
         <div>
           {showBlank ? (
-            <div className="col-12">
               <div className="card mt-2">
                 <div className="card-body">
                   You haven't purchased anything yet .
                 </div>
               </div>
-            </div>
           ) : (
             <div
               className="d-flex justify-content-center align-items-center"

@@ -15,9 +15,10 @@ const Header = ({ title, showLogo = false }) => {
   return (
     <div className={`appHeader bg-primary text-light`}>
       <div className="left pageTitle" onClick={!showLogo ? handleGoBack : null}>
+            {/* ? <img src={`/assets/img/logo.png`} loading='lazy' alt="" className="logo" /> */}
         {
           showLogo
-            ? <img src={`/assets/img/logo.png`} loading='lazy' alt="" className="logo" />
+            ? <span style={{fontSize: "14px"}}>VT BOT</span>
             : <span className="material-symbols-outlined">
               chevron_left
             </span>

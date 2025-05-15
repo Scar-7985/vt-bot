@@ -43,8 +43,10 @@ const Login = () => {
         setToast({ msg: resp.data.msg, type: "success", show: true });
         const loginId = resp.data[0].cuid;
         const uName = resp.data[0].name;
+        const uEmail = resp.data[0].email;
         localStorage.setItem("userId:", loginId);
         localStorage.setItem("userName:", uName);
+        localStorage.setItem("userEmail:", uEmail);
         setTimeout(() => {
           window.location.reload();
         }, 2000);
@@ -160,14 +162,19 @@ const Login = () => {
             <div className="pb-1">
               <div className="ard-header py-0 mb-3 border-secondary">
                 <h2 className="mb-0 text-center">{showOtp ? "Verify OTP" : "Log In"}</h2>
-                <p
+                <div
                   className="text-center text-muted"
                   style={{ fontSize: "13px" }}
                 >
                   {showOtp
-                    ? "If you don't see the OTP in your inbox, please check your spam folder."
+                    ? (
+                      <p>
+                        OTP has been sent to <strong className="text-dark">{email}</strong>.<br />
+                        If you don't see it in your inbox, please check your spam folder.
+                      </p>
+                    )
                     : "Login to you account"}
-                </p>
+                </div>
               </div>
 
               {showOtp && (

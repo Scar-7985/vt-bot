@@ -13,8 +13,6 @@ const Support = () => {
             axios.post(`${SITE_URL}/api/get-api/support.php`).then(resp => {
                 setSocialData(resp.data.social);
                 setContactData(resp.data.contact);
-                console.log(resp.data);
-
             })
         }
     }, [])

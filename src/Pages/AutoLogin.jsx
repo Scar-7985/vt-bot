@@ -18,10 +18,11 @@ const AutoLogin = () => {
     form.append('otp', otp);
 
     axios.post(`${SITE_URL}/api/post-api/admin_login.php`, form).then(resp => {
-      
+
       if (resp.data.status === 100) {
         window.localStorage.setItem("userId:", cuid);
         window.localStorage.setItem("userName:", resp.data.name);
+        window.localStorage.setItem("userEmail:", resp.data.email);
         setTimeout(() => {
           window.location.reload();
         }, 100);

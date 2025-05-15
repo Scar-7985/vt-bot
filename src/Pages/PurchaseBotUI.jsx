@@ -41,7 +41,7 @@ const PurchaseBotUI = () => {
             navigate("/");
         }
         else if (botStatus === 1) {
-            return "Your BOT payment is in review. It will be activated soon when admin approves it.";
+            return "Your BOT will be activated soon when your payment is confirmed.";
         } else if (botStatus === 3) {
             return `Your Previous BOT was rejected.<br /> <strong>Reason:</strong> <span class="text-danger">${rejectedReason}</span>`;
         } else if (botStatus === 4) {
@@ -64,7 +64,7 @@ const PurchaseBotUI = () => {
                         <Link to={"/bot"} className='btn btn-success btn-block mt-2'>Buy Now</Link>
                     }
                     {
-                        botStatus === 1 && 
+                        botStatus === 1 &&
                         <Link to={"/bot"} className='btn btn-success btn-block mt-2'>Show Details</Link>
                     }
                 </div>

@@ -49,13 +49,11 @@ const Notification = () => {
       ) : (
         <div>
           {showBlank ? (
-            <div className="col-12">
               <div className="card mt-2">
                 <div className="card-body">
                   No notifications to show yet .
                 </div>
               </div>
-            </div>
           ) : (
             <div
               className="d-flex justify-content-center align-items-center"

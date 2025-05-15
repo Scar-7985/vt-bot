@@ -32,6 +32,8 @@ const UserStatus = () => {
                         "/update-profile",
                         "/bot",
                         "/support",
+                        "/transaction",
+                        "/transaction-details",
                         "/purchase",
                         "/kyc",
                         "/privacy-policy",
@@ -54,7 +56,7 @@ const UserStatus = () => {
                         !allowedPaths.includes(location.pathname) &&
                         [0, 1, 3, 4].includes(botStatus)
                     ) {
-                        navigate("/purchase-bot");
+                        navigate("/purchase-bot")
                     }
                 });
 

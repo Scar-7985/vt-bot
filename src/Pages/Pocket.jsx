@@ -40,7 +40,8 @@ const Pocket = () => {
         .post(`${SITE_URL}/api/get-api/transaction.php`, form)
         .then((resp) => {
           if (resp.data.length > 0) {
-            setTransactionData(resp.data);
+            const transactionData = resp.data.slice(0, 5);
+            setTransactionData(transactionData);
           }
         })
         .catch((error) => {
@@ -132,50 +133,7 @@ const Pocket = () => {
           </div>
 
         </div>
-        {/* <div className="wallet-footer ">
-          <div className="item">
-            <a data-bs-toggle="modal" data-toggle="modal"
-              data-target="#depositActionSheet">
-              <div className="icon-wrapper bg-danger">
-                <span className="material-symbols-outlined">
-                  arrow_downward
-                </span>
-              </div>
-              <strong>Withdraw</strong>
-            </a>
-          </div>
-          <div className="item">
-            <a  >
-              <div className="icon-wrapper">
-                <span className="material-symbols-outlined">
-                  arrow_upward
-                </span>
-              </div>
-              <strong>Send</strong>
-            </a>
-          </div>
-          <div className="item">
-            <a >
-              <div className="icon-wrapper bg-success">
-                <span className="material-symbols-outlined">
-                  arrow_downward
-                </span>
-              </div>
-              <strong>Cards</strong>
-            </a>
-          </div>
-          <div className="item">
-            <a >
-              <div className="icon-wrapper bg-warning">
-                <span className="material-symbols-outlined">
-                  arrow_downward
-                </span>
-              </div>
-              <strong>Exchange</strong>
-            </a>
-          </div>
-
-        </div> */}
+       
       </div>
 
 
@@ -323,7 +281,7 @@ const Pocket = () => {
               <div className="transactions">
 
                 <div className="mt-2">
-                  {transactionData.slice(0, 5).map((item, index) => {
+                  {transactionData.map((item, index) => {
                     return (
                       <ul
                         className="listview image-listview mt-1"

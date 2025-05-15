@@ -67,7 +67,7 @@ const Profile = () => {
         form.append("cuid", isAuthenticated);
         axios.post(`${SITE_URL}/api/get-api/update_profile.php`, form).then(resp => {
             setProfilePic(resp.data.photo);
-            setRank(resp.data.rank)
+            setRank(resp.data.rank);
         })
     }, [])
 
@@ -79,8 +79,8 @@ const Profile = () => {
         }, 2000);
     }
 
-    const goTo = (title, path) => {
-        navigate(`${path}`, { state: { freeCourses: (title === "Free Courses" ? title : null) } });
+    const goTo = (path) => {
+        navigate(path);
     }
 
     return (
@@ -90,12 +90,12 @@ const Profile = () => {
                 className="py-4 d-flex"
             >
                 <div className="avatar-section">
-                    <a href="#">
-                        <img src={`${SITE_URL}/upload/user/${profilePic ? profilePic : "user-default-image.png"}`} alt="avatar" className="imaged w-50 rounded" />
+                    <a href="#" className='mx-3'>
+                        <img src={`${SITE_URL}/upload/user/${profilePic ? profilePic : "user-default-image.png"}`} alt="avatar" className="imaged rounded" style={{ width: "80px", height: "80px" }} />
                     </a>
                 </div>
                 <div className={``}>
-                    
+
                     {
                         rank !== 0 &&
                         <h4 className={`mb-0 mt-1 d-flex align-items-center`}>
@@ -125,7 +125,7 @@ const Profile = () => {
                     {
                         accountMenu.map((item, index) => {
                             return (
-                                <li onClick={() => goTo(item.title, item.path)} key={index}>
+                                <li onClick={() => goTo(item.path)} key={index}>
                                     <span className="item">
                                         <div className="in">
                                             <div className='d-flex align-items-center'>
@@ -173,7 +173,7 @@ const Profile = () => {
                     {
                         companyDetails.map((item, index) => {
                             return (
-                                <li onClick={() => goTo(item.title, item.path)} key={index}>
+                                <li onClick={() => goTo(item.path)} key={index}>
                                     <span className="item">
                                         <div className="in">
                                             <div className='d-flex align-items-center'>
@@ -212,7 +212,7 @@ const Profile = () => {
             {
                 showModal &&
                 <div className="modal fade dialogbox show d-block" tabIndex="-1" role="dialog" style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}>
-                    <div className="modal-dialog" role="document">
+                    <div className="modal-dialog m-0" role="document" style={{ maxWidth: "24rem" }}>
                         <div className={`modal-content`}>
                             <div className="pt-3 text-center" style={{ color: 'red' }}>
                                 <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>

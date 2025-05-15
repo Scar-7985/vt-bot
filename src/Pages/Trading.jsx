@@ -16,7 +16,7 @@ const Trading = () => {
       const form = new FormData();
       form.append('cuid', isAuthenticated);
       axios.post(`${SITE_URL}/api/get-api/update_profile.php`, form).then(resp => {
-        setShowTrading(resp.data.investment_status === 1)
+        setShowTrading(resp.data.investment_status === 2)
       })
     }
   }, [])

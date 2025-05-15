@@ -7,11 +7,11 @@ const TransactionDetail = () => {
 
     const location = useLocation();
     const { transactionId } = location.state;
+    const [loadingState, setLoadingState] = useState(false);
+    const [coinTxnId, setCoinTxnId] = useState(null);
     const [transactionData, setTransactionData] = useState(null);
     const [invId, setInvId] = useState(null);
     const [showFullScreen, setShowFullScreen] = useState(false);
-
-    console.log(transactionId);
 
 
     useEffect(() => {
@@ -23,14 +23,18 @@ const TransactionDetail = () => {
                 if (resp.data.length > 0) {
 
                     const filteredData = resp.data.find((item) => String(item.txnid) === String(transactionId));
-                    setTransactionData(filteredData)
-                    // console.log("Transaction Data => ", filteredData);
+                    setTransactionData(filteredData);
+                    const txnData = new FormData();
+                    txnData.append("cuid", isAuthenticated);
+                    txnData.append("txn_id", transactionId);
 
+                    axios.post(`${SITE_URL}/api/get-api/coin_txn.php`, txnData).then(resp => {
+                        setCoinTxnId(resp.data.coinid);
+                    })
 
                     if (filteredData.txnname.includes("Investment")) {
                         axios.post(`${SITE_URL}/api/get-api/investment.php`, form).then(resp => {
                             const filteredInv = resp.data.find((INV) => String(INV.txnid) === String(transactionId));
-                            // console.log("INV Data => ", filteredInv);
                             setInvId(filteredInv?.invid);
                         })
                     }
@@ -41,7 +45,36 @@ const TransactionDetail = () => {
 
             })
         }
-    }, [transactionId])
+    }, [transactionId]);
+
+    
+
+    const CheckStatus = () => {
+        if (!isAuthenticated || !transactionData || !coinTxnId) return;
+
+        setLoadingState(true);
+        const coinTxnData = new FormData();
+
+        coinTxnData.append("cuid", isAuthenticated);
+        coinTxnData.append("txn_id", coinTxnId);
+        if (transactionData?.txnname.includes("Purchased Bot")) {
+            coinTxnData.append("txn_type", "BOT");
+        } else if (transactionData?.txnname.includes("Investment")) {
+            coinTxnData.append("txn_type", "INV");
+        }
+
+        axios.post(`${SITE_URL}/api/post-api/CoinPayments/check_status.php`, coinTxnData)
+            .then(resp => {
+                console.log(resp.data);
+                
+                if (resp.data.status !== 0) {
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1000);
+                }
+                setLoadingState(false);
+            })
+    };
 
 
     return (
@@ -57,19 +90,24 @@ const TransactionDetail = () => {
                                 <div className="listed-detail mt-3">
                                     <div className="icon-wrapper">
                                         <div className="iconbox">
-                                            <span className="material-symbols-outlined">
-                                                mail
+                                            <span className="material-symbols-outlined" style={{ fontSize: "30px" }}>
+                                                receipt_long
                                             </span>
                                         </div>
                                     </div>
                                     <h3 className="text-center mt-2">Transaction Info</h3>
                                 </div>
+                                 {
+                                    transactionData.txnstatus === 1 &&
+                                    <button className='btn btn-dark btn-block mt-2' onClick={CheckStatus}>Check Payment Status</button>
+                                }
 
                                 <ul className="listview flush transparent simple-listview no-space mt-3">
 
 
                                     {/*xxxxxxxxxxxxxxxxxxxxxxx Payment Proof xxxxxxxxxxxxxxxxxxxxxxx*/}
-                                    {transactionData.txnstatus === 2 && !transactionData.txnname.startsWith("Level") && (
+                                    {/*
+                                        transactionData.txnstatus === 2 && !transactionData.txnname.startsWith("Level") && (
                                         <li>
                                             <strong>Transaction Proof</strong>
                                             <span onClick={() => setShowFullScreen(true)}>
@@ -81,7 +119,8 @@ const TransactionDetail = () => {
                                                 />
                                             </span>
                                         </li>
-                                    )}
+                                    )
+                                    */}
 
 
                                     {/*xxxxxxxxxxxxxxxxxxxxxxx Payment Proof xxxxxxxxxxxxxxxxxxxxxxx*/}
@@ -133,8 +172,8 @@ const TransactionDetail = () => {
 
                                     <li>
                                         <strong className=''>Amount</strong>
-                                        <h3 className={transactionData.txnname.startsWith("Level") || transactionData.txnname.startsWith("Withdraw") ? 'text-success' : 'text-danger'}>
-                                            {transactionData.txnname.startsWith("Level") || transactionData.txnname.startsWith("Withdraw") ? '+' : '-'} ${transactionData.txnamount}
+                                        <h3 className={transactionData.txnname.startsWith("Level") || transactionData.txnname.startsWith("Withdraw") || transactionData.txnname.startsWith("Investment") ? 'text-success' : 'text-danger'}>
+                                            {transactionData.txnname.startsWith("Level") || transactionData.txnname.startsWith("Withdraw") || transactionData.txnname.startsWith("Investment") ? '+' : '-'} ${transactionData.txnamount}
                                         </h3>
                                     </li>
                                     {
@@ -152,6 +191,9 @@ const TransactionDetail = () => {
                                         </li>
                                     }
                                 </ul>
+
+                               
+
                                 {/* Fullscreen Image Preview */}
                                 {showFullScreen && (
                                     <div
@@ -181,8 +223,17 @@ const TransactionDetail = () => {
                                         </div>
                                     </div>
                                 )}
-
                             </div>
+                            {
+                                loadingState &&
+
+                                <div className="modal fade dialogbox show d-flex justify-content-center align-items-center" tabIndex="-1" role="dialog" style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}>
+                                    <div className="modal fade dialogbox show d-flex justify-content-center align-items-center" tabIndex="-1" role="dialog" style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}>
+                                        <div class="spinner-border text-warning" role="status"
+                                            style={{ width: "50px", height: "50px", borderWidth: "4px" }}></div>
+                                    </div>
+                                </div>
+                            }
                         </div>
                     ) : (
                         <div className='d-flex justify-content-center align-items-center' style={{ height: "calc(100vh - 160px)" }}>

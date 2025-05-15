@@ -1,0 +1,19 @@
+{
+  "name": "VT BOT",
+  "short_name": "VT BOT",
+  "theme_color": "#000000",
+  "background_color": "#000000",
+  "display": "standalone",
+  "start_url": ".",
+  "scope": ".",
+  "categories": [
+    "finance"
+  ],
+  "icons": [
+    {
+      "src": "favicon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
